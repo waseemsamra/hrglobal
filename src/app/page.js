@@ -168,16 +168,16 @@ export default async function Home({ searchParams }) {
           <div className="flex items-center gap-4">
             <div className="hidden sm:flex gap-2">
               <Link
-                href="/register"
+                href="/candidate/login"
                 className="px-4 py-2 text-on-surface hover:bg-surface-container-low rounded-lg transition-all font-semibold"
               >
                 Login
               </Link>
               <Link
-                href="/register"
+                href="/employer/login"
                 className="px-4 py-2 bg-primary text-on-primary rounded-lg hover:opacity-80 transition-all font-semibold"
               >
-                Register
+                Employer
               </Link>
             </div>
             <div className="flex items-center gap-2 border-l border-outline-variant pl-4">

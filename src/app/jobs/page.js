@@ -73,8 +73,8 @@ export default async function JobsPage() {
             <Link href="/register" className="px-4 py-2 border border-outline-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-all">
               Login
             </Link>
-            <Link href="/register" className="px-4 py-2 bg-on-surface text-on-primary font-label-md text-label-md rounded-lg hover:opacity-80 transition-all">
-              Register
+            <Link href="/employer/login" className="px-4 py-2 bg-on-surface text-on-primary font-label-md text-label-md rounded-lg hover:opacity-80 transition-all">
+              Employer
             </Link>
           </div>
         </div>
