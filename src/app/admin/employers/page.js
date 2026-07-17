@@ -1,5 +1,4 @@
-import SideNav from "@/components/SideNav";
-import TopNav from "@/components/TopNav";
+import AdminShell from "@/components/AdminShell";
 import EmployerManager from "@/components/EmployerManager";
 import { getCurrentAdmin } from "@/lib/admin";
 import { redirect } from "next/navigation";
@@ -15,12 +14,8 @@ export default async function AdminEmployersPage() {
   if (!admin) redirect("/admin/login");
 
   return (
-    <div className="bg-surface text-on-surface min-h-screen">
-      <SideNav active="Employers" />
-      <main className="ml-[280px] min-h-screen flex flex-col">
-        <TopNav title="Employers" />
-        <EmployerManager />
-      </main>
-    </div>
+    <AdminShell active="Employers" title="Employers">
+      <EmployerManager />
+    </AdminShell>
   );
 }

@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ObjectId } from "mongodb";
-import SideNav from "@/components/SideNav";
-import TopNav from "@/components/TopNav";
+import AdminShell from "@/components/AdminShell";
 import { getDb } from "@/lib/mongodb";
 import { serializeEmployer } from "@/lib/employer";
 import EmployerStatusControls from "@/components/EmployerStatusControls";
@@ -64,15 +63,12 @@ export default async function AdminEmployerDetailPage({ params }) {
   const { employer, stats, jobs } = data;
 
   return (
-    <div className="bg-surface text-on-surface min-h-screen">
-      <SideNav active="Employers" />
-      <main className="ml-[280px] min-h-screen flex flex-col">
-        <TopNav title="Employer Details" />
-        <div className="p-8 max-w-container-max mx-auto w-full">
-          <Link href="/admin/employers" className="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary mb-6 text-label-md">
-            <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-            Back to Employers
-          </Link>
+    <AdminShell active="Employers" title="Employer Details">
+      <div className="p-8 max-w-container-max mx-auto w-full">
+        <Link href="/admin/employers" className="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary mb-6 text-label-md">
+          <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+          Back to Employers
+        </Link>
 
           {/* Header card */}
           <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 mb-6">
@@ -180,7 +176,6 @@ export default async function AdminEmployerDetailPage({ params }) {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+    </AdminShell>
   );
 }

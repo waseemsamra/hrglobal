@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
-import SideNav from "@/components/SideNav";
-import TopNav from "@/components/TopNav";
+import AdminShell from "@/components/AdminShell";
 import AdminOverview from "@/components/AdminOverview";
 import { getDb } from "@/lib/mongodb";
 import { getCurrentAdmin } from "@/lib/admin";
@@ -67,14 +66,8 @@ export default async function AdminDashboardPage() {
   const { metrics, registrations } = await getAdminData();
 
   return (
-    <>
-      <SideNav active="Dashboard" />
-      <main className="ml-[280px] min-h-screen">
-        <TopNav title="Dashboard" />
-        <div className="p-container-padding-desktop">
-          <AdminOverview metrics={metrics} registrations={registrations} />
-        </div>
-      </main>
-    </>
+    <AdminShell active="Dashboard" title="Dashboard">
+      <AdminOverview metrics={metrics} registrations={registrations} />
+    </AdminShell>
   );
 }

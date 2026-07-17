@@ -1,5 +1,4 @@
-import SideNav from "@/components/SideNav";
-import TopNav from "@/components/TopNav";
+import AdminShell from "@/components/AdminShell";
 import JobPosts from "@/components/JobPosts";
 import { getDb } from "@/lib/mongodb";
 import { getCurrentAdmin } from "@/lib/admin";
@@ -48,12 +47,8 @@ export default async function AdminJobsPage() {
   const { jobs, counts } = await getJobs();
 
   return (
-    <>
-      <SideNav active="Job Posts" />
-      <main className="ml-[280px] min-h-screen flex flex-col">
-        <TopNav title="Job Posts" />
-        <JobPosts jobs={jobs} counts={counts} />
-      </main>
-    </>
+    <AdminShell active="Job Posts" title="Job Posts">
+      <JobPosts jobs={jobs} counts={counts} />
+    </AdminShell>
   );
 }

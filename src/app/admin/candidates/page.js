@@ -1,5 +1,4 @@
-import SideNav from "@/components/SideNav";
-import TopNav from "@/components/TopNav";
+import AdminShell from "@/components/AdminShell";
 import CandidateList from "@/components/CandidateList";
 import { getDb } from "@/lib/mongodb";
 import { getCurrentAdmin } from "@/lib/admin";
@@ -108,12 +107,8 @@ export default async function AdminCandidatesPage({ searchParams }) {
   const { candidates, total, job } = await getCandidates(jobId);
 
   return (
-    <>
-      <SideNav active="Candidate Management" />
-      <main className="ml-[280px] min-h-screen flex flex-col">
-        <TopNav title="Candidates" />
-        <CandidateList candidates={candidates} total={total} job={job} />
-      </main>
-    </>
+    <AdminShell active="Candidate Management" title="Candidates">
+      <CandidateList candidates={candidates} total={total} job={job} />
+    </AdminShell>
   );
 }

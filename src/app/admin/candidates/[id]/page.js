@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import SideNav from "@/components/SideNav";
-import TopNav from "@/components/TopNav";
+import AdminShell from "@/components/AdminShell";
 import CandidateDashboard from "@/components/CandidateDashboard";
 import { getDb } from "@/lib/mongodb";
 import { getCurrentAdmin } from "@/lib/admin";
@@ -62,21 +61,17 @@ export default async function CandidateDetailPage({ params }) {
   };
 
   return (
-    <>
-      <SideNav active="Candidate Management" />
-      <main className="ml-[280px] min-h-screen">
-        <TopNav title="Candidate Dashboard" />
-        <div className="px-container-padding-desktop pt-container-padding-desktop">
-          <Link
-            href="/admin/candidates"
-            className="inline-flex items-center gap-1 text-secondary font-bold text-label-md hover:underline"
-          >
-            <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-            Back to Candidate Pool
-          </Link>
-        </div>
-        <CandidateDashboard candidate={candidate} />
-      </main>
-    </>
+    <AdminShell active="Candidate Management" title="Candidate Dashboard">
+      <div className="px-container-padding-desktop pt-container-padding-desktop">
+        <Link
+          href="/admin/candidates"
+          className="inline-flex items-center gap-1 text-secondary font-bold text-label-md hover:underline"
+        >
+          <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+          Back to Candidate Pool
+        </Link>
+      </div>
+      <CandidateDashboard candidate={candidate} />
+    </AdminShell>
   );
 }

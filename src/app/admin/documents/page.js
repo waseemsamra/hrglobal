@@ -1,5 +1,4 @@
-import SideNav from "@/components/SideNav";
-import TopNav from "@/components/TopNav";
+import AdminShell from "@/components/AdminShell";
 import DocumentVault from "@/components/DocumentVault";
 import { getCurrentAdmin } from "@/lib/admin";
 import { redirect } from "next/navigation";
@@ -11,12 +10,8 @@ export default async function AdminDocumentsPage() {
   if (!admin) redirect("/admin/login");
 
   return (
-    <>
-      <SideNav active="Documents" />
-      <main className="ml-[280px] min-h-screen bg-slate-50">
-        <TopNav title="Document Vault" />
-        <DocumentVault />
-      </main>
-    </>
+    <AdminShell active="Documents" title="Document Vault">
+      <DocumentVault />
+    </AdminShell>
   );
 }

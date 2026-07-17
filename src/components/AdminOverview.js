@@ -30,44 +30,52 @@ export default function AdminOverview({ metrics, registrations = [] }) {
   return (
     <div className="max-w-[1440px] mx-auto space-y-gutter">
       {/* Metrics Bento */}
-      <div className="bento-grid">
-        <MetricCard
-          icon="groups"
-          label="Total Candidates"
-          value={metrics.totalCandidates.toLocaleString()}
-          sub={
-            <span className="text-[12px] text-green-600 font-bold flex items-center">
-              <span className="material-symbols-outlined text-[14px]">trending_up</span> +12% this
-              month
-            </span>
-          }
-        />
-        <MetricCard
-          icon="clinical_notes"
-          label="Active Openings"
-          value={metrics.activeOpenings.toLocaleString()}
-          sub={<p className="text-[12px] text-on-surface-variant font-medium">85 Priority roles</p>}
-        />
-        <MetricCard
-          icon="avg_time"
-          label="Avg. Time-to-Hire"
-          value={metrics.avgTimeToHire}
-          sub={
-            <p className="text-[12px] text-on-surface-variant font-medium">
-              Global benchmark: 24d
-            </p>
-          }
-        />
-        <MetricCard
-          icon="verified"
-          label="Offer Acceptance"
-          value={metrics.offerAcceptance}
-          sub={
-            <span className="text-[12px] text-green-600 font-bold flex items-center">
-              <span className="material-symbols-outlined text-[14px]">arrow_upward</span> +2.1%
-            </span>
-          }
-        />
+      <div className="flex md:grid md:grid-cols-12 gap-4 md:gap-gutter overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide -mx-container-padding-mobile md:mx-0 px-container-padding-mobile md:px-0">
+        <div className="w-[85vw] max-w-[320px] md:w-auto md:col-span-3 flex-shrink-0 snap-start">
+          <MetricCard
+            icon="groups"
+            label="Total Candidates"
+            value={metrics.totalCandidates.toLocaleString()}
+            sub={
+              <span className="text-[12px] text-green-600 font-bold flex items-center">
+                <span className="material-symbols-outlined text-[14px]">trending_up</span> +12% this
+                month
+              </span>
+            }
+          />
+        </div>
+        <div className="w-[85vw] max-w-[320px] md:w-auto md:col-span-3 flex-shrink-0 snap-start">
+          <MetricCard
+            icon="clinical_notes"
+            label="Active Openings"
+            value={metrics.activeOpenings.toLocaleString()}
+            sub={<p className="text-[12px] text-on-surface-variant font-medium">85 Priority roles</p>}
+          />
+        </div>
+        <div className="w-[85vw] max-w-[320px] md:w-auto md:col-span-3 flex-shrink-0 snap-start">
+          <MetricCard
+            icon="avg_time"
+            label="Avg. Time-to-Hire"
+            value={metrics.avgTimeToHire}
+            sub={
+              <p className="text-[12px] text-on-surface-variant font-medium">
+                Global benchmark: 24d
+              </p>
+            }
+          />
+        </div>
+        <div className="w-[85vw] max-w-[320px] md:w-auto md:col-span-3 flex-shrink-0 snap-start">
+          <MetricCard
+            icon="verified"
+            label="Offer Acceptance"
+            value={metrics.offerAcceptance}
+            sub={
+              <span className="text-[12px] text-green-600 font-bold flex items-center">
+                <span className="material-symbols-outlined text-[14px]">arrow_upward</span> +2.1%
+              </span>
+            }
+          />
+        </div>
       </div>
 
       {/* Middle Section: Map and Pending Actions */}

@@ -1,6 +1,5 @@
 import { Suspense } from "react";
-import SideNav from "@/components/SideNav";
-import TopNav from "@/components/TopNav";
+import AdminShell from "@/components/AdminShell";
 import JobPostForm from "@/components/JobPostForm";
 import { getCurrentAdmin } from "@/lib/admin";
 import { redirect } from "next/navigation";
@@ -16,16 +15,12 @@ export default async function PostManagementPage() {
   if (!admin) redirect("/admin/login");
 
   return (
-    <>
-      <SideNav active="Post Management" />
-      <main className="ml-[280px] min-h-screen flex flex-col">
-        <TopNav title="Post Management" />
-        <Suspense
-          fallback={<div className="p-12 text-center text-on-surface-variant">Loading…</div>}
-        >
-          <JobPostForm />
-        </Suspense>
-      </main>
-    </>
+    <AdminShell active="Post Management" title="Post Management">
+      <Suspense
+        fallback={<div className="p-12 text-center text-on-surface-variant">Loading…</div>}
+      >
+        <JobPostForm />
+      </Suspense>
+    </AdminShell>
   );
 }

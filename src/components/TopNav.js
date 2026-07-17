@@ -1,7 +1,16 @@
-export default function TopNav({ title = "Dashboard" }) {
+export default function TopNav({ title = "Dashboard", onMenuClick }) {
   return (
     <header className="sticky top-0 z-40 w-full h-16 bg-surface border-b border-outline-variant flex justify-between items-center px-container-padding-desktop">
-      <div>
+      <div className="flex items-center gap-3">
+        {onMenuClick && (
+          <button
+            onClick={onMenuClick}
+            className="md:hidden p-2 -ml-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors"
+            aria-label="Open menu"
+          >
+            <span className="material-symbols-outlined">menu</span>
+          </button>
+        )}
         <h1 className="text-headline-lg font-headline-lg text-on-surface">{title}</h1>
       </div>
       <div className="flex items-center gap-6">

@@ -69,3 +69,12 @@ html {
   border-color: #0058be;
   background: rgba(0, 88, 190, 0.05);
 }
+
+/* Hide scrollbar for horizontal sliders */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
