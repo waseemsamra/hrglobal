@@ -5,6 +5,7 @@ import { getDb } from "@/lib/mongodb";
 import { getCurrentCandidate } from "@/lib/candidate";
 import CandidateSideNav from "@/components/CandidateSideNav";
 import CandidateTopNav from "@/components/CandidateTopNav";
+import CandidateShell from "@/components/CandidateShell";
 
 export const dynamic = "force-dynamic";
 
@@ -337,6 +338,6 @@ export default async function CandidateDashboardPage() {
         <span className="material-symbols-outlined">add</span>
         <span className="font-bold">Find New Job</span>
       </Link>
-    </div>
+    </CandidateShell>
   );
 }
