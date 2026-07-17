@@ -5,12 +5,20 @@ import { getOrgName } from "@/lib/settings";
 import HeroSearch from "@/components/HeroSearch";
 
 export async function generateMetadata() {
-  const org = await getOrgName();
-  return {
-    title: `${org} | Find Your Dream Job Globally`,
-    description:
-      "Search thousands of active job postings in the world's leading cities. Browse by country, city, and industry.",
-  };
+  try {
+    const org = await getOrgName();
+    return {
+      title: `${org} | Find Your Dream Job Globally`,
+      description:
+        "Search thousands of active job postings in the world's leading cities. Browse by country, city, and industry.",
+    };
+  } catch {
+    return {
+      title: "HR System | Find Your Dream Job Globally",
+      description:
+        "Search thousands of active job postings in the world's leading cities. Browse by country, city, and industry.",
+    };
+  }
 }
 
 // Always render fresh data from MongoDB.
@@ -111,7 +119,12 @@ async function loadData(searchParams) {
 export default async function Home({ searchParams }) {
   const sp = await searchParams;
   const { countries, categories, cities, jobs, totalActive, filtered } = await loadData(sp);
-  const orgName = await getOrgName();
+  let orgName = "HR System";
+  try {
+    orgName = await getOrgName();
+  } catch {
+    orgName = "HR System";
+  }
 
   const topCities = cities.slice(0, 4);
   const featured = jobs.slice(0, 6);
