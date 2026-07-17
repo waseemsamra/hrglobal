@@ -132,12 +132,8 @@ export default async function CandidateDashboardPage() {
   const firstName = (candidate.name || "Candidate").split(/\s+/)[0];
 
   return (
-    <div className="flex h-screen overflow-hidden bg-surface text-on-surface">
-      <CandidateSideNav candidate={candidate} />
-
+    <CandidateShell candidate={candidate} active="Dashboard">
       <div className="flex-1 flex flex-col overflow-hidden relative">
-        <CandidateTopNav />
-
         <main className="flex-1 overflow-y-auto p-margin-desktop custom-scrollbar">
           <div className="max-w-container-max mx-auto">
             {/* Welcome Header */}
