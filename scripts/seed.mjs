@@ -453,6 +453,7 @@ async function run() {
     { name: "Sales", description: "B2B and field sales." },
     { name: "Security", description: "Physical and cyber security." },
     { name: "Logistics", description: "Supply chain and logistics." },
+    { name: "Drivers", description: "Truck, delivery, and transport driving roles." },
     { name: "Journalism", description: "News, media, and reporting." },
     { name: "Translation", description: "Language and translation services." },
   ];
@@ -500,6 +501,7 @@ async function run() {
     { name: "Chemical Engineering", category: "Engineering", count: 50 },
     { name: "Security", category: "Security", count: 43 },
     { name: "Logistics", category: "Logistics", count: 36 },
+    { name: "Drivers", category: "Drivers", count: 28 },
     { name: "Power Engineering", category: "Engineering", count: 30 },
     { name: "Network Admin", category: "Software", count: 29 },
     { name: "Telesales", category: "Sales", count: 17 },
@@ -600,6 +602,13 @@ async function run() {
     { jobId: "sc-logistics-amsterdam", title: "Logistics Coordinator", department: "Logistics", category: "Logistics", role: "Logistics", location: "Amsterdam, Netherlands", type: "Full-time", experience: "Junior Professional", remotePolicy: "Hybrid", minSalary: 54000, maxSalary: 84000, currency: "€", skills: ["Logistics"], badge: null, applicants: 73, postedAt: daysAgo(3) },
     { jobId: "sc-journalist-cairo", title: "Staff Journalist", department: "Journalism", category: "Journalism", role: "Journalism", location: "Alexandria, Egypt", type: "Contract", experience: "Junior Professional", remotePolicy: "Remote", minSalary: 30000, maxSalary: 54000, currency: "EGP", skills: ["Journalism"], badge: null, applicants: 18, postedAt: daysAgo(4) },
     { jobId: "sc-translator-remote", title: "Arabic-English Translator", department: "Translation", category: "Translation", role: "Translation", location: "Remote", type: "Contract", experience: "Experienced professional", remotePolicy: "Remote", minSalary: 36000, maxSalary: 60000, currency: "$", skills: ["Translation"], badge: null, applicants: 26, postedAt: daysAgo(5) },
+
+    // --- Germany Driver Jobs ---
+    { jobId: "sc-truck-driver-berlin", title: "Truck Driver", department: "Drivers", category: "Drivers", role: "Driver", location: "Berlin, Germany", type: "Full-time", experience: "Experienced professional", remotePolicy: "On-site", minSalary: 42000, maxSalary: 58000, currency: "€", skills: ["Truck Driving", "Logistics", "Driving License"], badge: "Urgent", applicants: 34, postedAt: daysAgo(1) },
+    { jobId: "sc-delivery-driver-munich", title: "Delivery Driver", department: "Drivers", category: "Drivers", role: "Driver", location: "Munich, Germany", type: "Full-time", experience: "Junior Professional", remotePolicy: "On-site", minSalary: 34000, maxSalary: 46000, currency: "€", skills: ["Delivery", "Driving", "Navigation"], badge: null, applicants: 67, postedAt: daysAgo(3) },
+    { jobId: "sc-longhaul-driver-hamburg", title: "Long-haul Truck Driver", department: "Drivers", category: "Drivers", role: "Driver", location: "Hamburg, Germany", type: "Full-time", experience: "Experienced professional", remotePolicy: "On-site", minSalary: 48000, maxSalary: 64000, currency: "€", skills: ["Truck Driving", "Long-haul", "Logistics"], badge: "Featured", applicants: 45, postedAt: daysAgo(2) },
+    { jobId: "sc-courier-driver-frankfurt", title: "Courier Driver", department: "Drivers", category: "Drivers", role: "Driver", location: "Frankfurt, Germany", type: "Part-time", experience: "Student/ Fresh graduate", remotePolicy: "On-site", minSalary: 22000, maxSalary: 32000, currency: "€", skills: ["Courier", "Driving", "Time Management"], badge: null, applicants: 89, postedAt: daysAgo(5) },
+    { jobId: "sc-bus-driver-cologne", title: "Bus Driver", department: "Drivers", category: "Drivers", role: "Driver", location: "Cologne, Germany", type: "Full-time", experience: "Experienced professional", remotePolicy: "On-site", minSalary: 36000, maxSalary: 48000, currency: "€", skills: ["Bus Driving", "Public Transport", "Safety"], badge: null, applicants: 23, postedAt: daysAgo(7) },
   ];
 
   const roleTitles = {
@@ -614,6 +623,7 @@ async function run() {
     HR: ["HR Business Partner", "Recruitment Specialist"],
     Design: ["UI/UX Designer", "Graphic Designer"],
     Logistics: ["Logistics Coordinator", "Warehouse Supervisor"],
+    Drivers: ["Truck Driver", "Delivery Driver", "Bus Driver"],
   };
   const cityByCountry = Object.fromEntries(countries.map((c) => [c.name, c.cities]));
   const typeNames = ["Full-time", "Contract", "Part-time", "Temporary", "Internship"];
