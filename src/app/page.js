@@ -43,30 +43,31 @@ function formatSalary(job) {
 }
 
 async function loadData(searchParams) {
-  const db = await getDb();
-  const [countries, categories, jobsRaw] = await Promise.all([
-    db.collection("countries").find({}).sort({ name: 1 }).toArray(),
-    db.collection("categories").find({}).sort({ name: 1 }).toArray(),
-    db.collection("jobs").find({ status: "Active" }).sort({ postedAt: -1 }).toArray(),
-  ]);
+  try {
+    const db = await getDb();
+    const [countries, categories, jobsRaw] = await Promise.all([
+      db.collection("countries").find({}).sort({ name: 1 }).toArray(),
+      db.collection("categories").find({}).sort({ name: 1 }).toArray(),
+      db.collection("jobs").find({ status: "Active" }).sort({ postedAt: -1 }).toArray(),
+    ]);
 
-  const q = (searchParams?.q || "").toLowerCase();
-  const country = searchParams?.country || "";
+    const q = (searchParams?.q || "").toLowerCase();
+    const country = searchParams?.country || "";
 
-  let jobs = jobsRaw;
-  if (q) {
-    jobs = jobs.filter(
-      (j) =>
-        j.title?.toLowerCase().includes(q) ||
-        j.department?.toLowerCase().includes(q) ||
-        (j.skills || []).some((s) => s.toLowerCase().includes(q))
-    );
-  }
-  if (country) {
-    jobs = jobs.filter((j) => (j.location || "").toLowerCase().includes(country.toLowerCase()));
-  }
+    let jobs = jobsRaw;
+    if (q) {
+      jobs = jobs.filter(
+        (j) =>
+          j.title?.toLowerCase().includes(q) ||
+          j.department?.toLowerCase().includes(q) ||
+          (j.skills || []).some((s) => s.toLowerCase().includes(q))
+      );
+    }
+    if (country) {
+      jobs = jobs.filter((j) => (j.location || "").toLowerCase().includes(country.toLowerCase()));
+    }
 
-  // Aggregate job counts per city (from locations) using job.location substring match.
+    // Aggregate job counts per city (from locations) using job.location substring match.
   const cityCounts = [];
   for (const c of countries) {
     for (const city of c.cities || []) {
@@ -94,6 +95,17 @@ async function loadData(searchParams) {
     totalActive: jobsRaw.length,
     filtered: Boolean(q || country),
   };
+  } catch (err) {
+    console.error("Homepage data load error:", err);
+    return {
+      countries: [],
+      categories: [],
+      cities: [],
+      jobs: [],
+      totalActive: 0,
+      filtered: Boolean(q || country),
+    };
+  }
 }
 
 export default async function Home({ searchParams }) {

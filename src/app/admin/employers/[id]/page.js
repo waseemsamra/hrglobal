@@ -23,30 +23,35 @@ const JOB_STATUS_STYLES = {
 };
 
 async function getEmployer(id) {
-  if (!ObjectId.isValid(id)) return null;
-  const db = await getDb();
-  const emp = await db.collection("employers").findOne({ _id: new ObjectId(id) });
-  if (!emp) return null;
-  const jobs = await db
-    .collection("jobs")
-    .find({ source: "employer", employerId: id })
-    .sort({ createdAt: -1 })
-    .toArray();
-  const activeJobs = jobs.filter((j) => j.status === "Active").length;
-  const applicants = jobs.reduce((s, j) => s + (j.applicants || 0), 0);
-  return {
-    employer: serializeEmployer(emp),
-    stats: { jobs: jobs.length, activeJobs, applicants },
-    jobs: jobs.map((j) => ({
-      id: j._id.toString(),
-      jobId: j.jobId,
-      title: j.title,
-      department: j.department,
-      location: j.location,
-      status: j.status,
-      applicants: j.applicants || 0,
-    })),
-  };
+  try {
+    if (!ObjectId.isValid(id)) return null;
+    const db = await getDb();
+    const emp = await db.collection("employers").findOne({ _id: new ObjectId(id) });
+    if (!emp) return null;
+    const jobs = await db
+      .collection("jobs")
+      .find({ source: "employer", employerId: id })
+      .sort({ createdAt: -1 })
+      .toArray();
+    const activeJobs = jobs.filter((j) => j.status === "Active").length;
+    const applicants = jobs.reduce((s, j) => s + (j.applicants || 0), 0);
+    return {
+      employer: serializeEmployer(emp),
+      stats: { jobs: jobs.length, activeJobs, applicants },
+      jobs: jobs.map((j) => ({
+        id: j._id.toString(),
+        jobId: j.jobId,
+        title: j.title,
+        department: j.department,
+        location: j.location,
+        status: j.status,
+        applicants: j.applicants || 0,
+      })),
+    };
+  } catch (err) {
+    console.error("Employer detail load error:", err);
+    return null;
+  }
 }
 
 export default async function AdminEmployerDetailPage({ params }) {
