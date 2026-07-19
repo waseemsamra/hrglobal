@@ -321,7 +321,7 @@ export default async function Home({ searchParams }) {
         </section>
 
         {/* Full-width horizontal scrolling logos */}
-        <section className="w-full bg-surface border-y border-outline-variant py-6 overflow-hidden">
+        <section className="w-full bg-surface py-6 overflow-hidden">
           <div className="relative">
             <div className="logo-carousel-track">
               {[...LOGOS, ...LOGOS].map((logo, idx) => (
