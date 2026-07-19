@@ -18,6 +18,7 @@ const NAV_ITEMS = [
   { icon: "description", label: "Documents", href: "/admin/documents" },
   { icon: "apartment", label: "Employers", href: "/admin/employers" },
   { icon: "leaderboard", label: "Analytics", href: "/admin" },
+  { icon: "image", label: "Logo Management", href: "/admin/settings" },
   { icon: "settings", label: "Settings", href: "/admin/settings" },
 ];
 

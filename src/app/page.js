@@ -308,6 +308,23 @@ export default async function Home({ searchParams }) {
           </div>
         </section>
 
+        {/* Full-width horizontal scrolling logos */}
+        <section className="w-full bg-surface border-y border-outline-variant py-6">
+          <div className="max-w-[1440px] mx-auto px-container-padding-desktop mb-4">
+            <h2 className="font-headline-lg text-headline-lg text-on-surface">Trusted by Leading Companies</h2>
+            <p className="text-on-surface-variant">Top employers hiring through our platform</p>
+          </div>
+          <div className="relative overflow-hidden">
+            <div className="flex gap-12 overflow-x-auto scrollbar-hide px-container-padding-desktop py-4 items-center">
+              {["Global Engineering Partners", "Sterling Capital", "LifeScience Innovations", "CloudStack Systems", "Apex Logistics", "NexGen Energy", "Horizon Health", "Quantum Finance"].map((name) => (
+                <div key={name} className="flex-shrink-0 w-40 h-20 bg-surface-container-lowest border border-outline-variant rounded-xl flex items-center justify-center px-4 hover:shadow-md transition-shadow">
+                  <span className="text-label-md font-label-md font-bold text-on-surface-variant text-center leading-tight">{name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* 1-Column List for Featured Jobs */}
         <section className="bg-surface-container-low py-stack-lg border-y border-outline-variant">
           <div className="max-w-[1000px] mx-auto px-container-padding-desktop">
