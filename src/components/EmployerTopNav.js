@@ -4,7 +4,7 @@ export default function EmployerTopNav({ orgName = "HR Global Portal" }) {
   return (
     <header className="fixed top-0 left-0 right-0 h-16 z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-8">
       <div className="flex items-center gap-8">
-        <span className="font-headline-md text-headline-md font-bold text-primary">{orgName}</span>
+        <span className="font-headline-sm text-headline-sm font-bold text-primary">{orgName}</span>
         <div className="hidden md:flex relative group">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">
             search

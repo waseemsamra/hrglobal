@@ -11,7 +11,7 @@ export default function TopNav({ title = "Dashboard", onMenuClick }) {
             <span className="material-symbols-outlined">menu</span>
           </button>
         )}
-        <h1 className="text-headline-lg font-headline-lg text-on-surface">{title}</h1>
+        <h1 className="text-label-lg font-label-lg text-on-surface">{title}</h1>
       </div>
       <div className="flex items-center gap-6">
         <div className="relative w-64">

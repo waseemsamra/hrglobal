@@ -17,7 +17,7 @@ export default function CandidateTopNav({ active = "Dashboard", onMenuClick }) {
         >
           <span className="material-symbols-outlined">menu</span>
         </button>
-        <span className="md:hidden text-headline-lg font-bold text-secondary">CH</span>
+        <span className="md:hidden text-headline-sm font-bold text-secondary">CH</span>
         <div className="hidden md:flex items-center gap-6">
           {items.map((it) => {
             const isActive = active === it.label;
