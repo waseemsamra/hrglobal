@@ -78,3 +78,22 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Infinite logo carousel */
+@keyframes logo-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.logo-carousel-track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: logo-scroll 30s linear infinite;
+}
+.logo-carousel-track:hover {
+  animation-play-state: paused;
+}

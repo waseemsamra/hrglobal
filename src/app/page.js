@@ -309,14 +309,14 @@ export default async function Home({ searchParams }) {
         </section>
 
         {/* Full-width horizontal scrolling logos */}
-        <section className="w-full bg-surface border-y border-outline-variant py-6">
+        <section className="w-full bg-surface border-y border-outline-variant py-6 overflow-hidden">
           <div className="max-w-[1440px] mx-auto px-container-padding-desktop mb-4">
             <h2 className="font-headline-lg text-headline-lg text-on-surface">Trusted by Leading Companies</h2>
             <p className="text-on-surface-variant">Top employers hiring through our platform</p>
           </div>
-          <div className="relative overflow-hidden">
-            <div className="flex gap-12 overflow-x-auto scrollbar-hide px-container-padding-desktop py-4 items-center">
-              {["Global Engineering Partners", "Sterling Capital", "LifeScience Innovations", "CloudStack Systems", "Apex Logistics", "NexGen Energy", "Horizon Health", "Quantum Finance", "BlueOcean Shipping", "IronBridge Manufacturing", "Pinnacle Aviation", "Atlas Renewable Energy", "Crestline Hotels", "Vortex Cybersecurity", "Meridian Telecom", "Summit Education Group", "Redwood Construction", "Silicon Labs", "Oceanic Fisheries", "Titan Motors"].map((name) => (
+          <div className="relative">
+            <div className="logo-carousel-track">
+              {[...["Global Engineering Partners", "Sterling Capital", "LifeScience Innovations", "CloudStack Systems", "Apex Logistics", "NexGen Energy", "Horizon Health", "Quantum Finance", "BlueOcean Shipping", "IronBridge Manufacturing", "Pinnacle Aviation", "Atlas Renewable Energy", "Crestline Hotels", "Vortex Cybersecurity", "Meridian Telecom", "Summit Education Group", "Redwood Construction", "Silicon Labs", "Oceanic Fisheries", "Titan Motors"], ...["Global Engineering Partners", "Sterling Capital", "LifeScience Innovations", "CloudStack Systems", "Apex Logistics", "NexGen Energy", "Horizon Health", "Quantum Finance", "BlueOcean Shipping", "IronBridge Manufacturing", "Pinnacle Aviation", "Atlas Renewable Energy", "Crestline Hotels", "Vortex Cybersecurity", "Meridian Telecom", "Summit Education Group", "Redwood Construction", "Silicon Labs", "Oceanic Fisheries", "Titan Motors"]].map((name) => (
                 <div key={name} className="flex-shrink-0 w-40 h-20 bg-surface-container-lowest border border-outline-variant rounded-xl flex items-center justify-center px-4 hover:shadow-md transition-shadow">
                   <span className="text-label-md font-label-md font-bold text-on-surface-variant text-center leading-tight">{name}</span>
                 </div>
