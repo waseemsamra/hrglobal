@@ -313,8 +313,8 @@ export default async function Home({ searchParams }) {
           <div className="relative">
             <div className="logo-carousel-track">
               {[...["Global Engineering Partners", "Sterling Capital", "LifeScience Innovations", "CloudStack Systems", "Apex Logistics", "NexGen Energy", "Horizon Health", "Quantum Finance", "BlueOcean Shipping", "IronBridge Manufacturing", "Pinnacle Aviation", "Atlas Renewable Energy", "Crestline Hotels", "Vortex Cybersecurity", "Meridian Telecom", "Summit Education Group", "Redwood Construction", "Silicon Labs", "Oceanic Fisheries", "Titan Motors"], ...["Global Engineering Partners", "Sterling Capital", "LifeScience Innovations", "CloudStack Systems", "Apex Logistics", "NexGen Energy", "Horizon Health", "Quantum Finance", "BlueOcean Shipping", "IronBridge Manufacturing", "Pinnacle Aviation", "Atlas Renewable Energy", "Crestline Hotels", "Vortex Cybersecurity", "Meridian Telecom", "Summit Education Group", "Redwood Construction", "Silicon Labs", "Oceanic Fisheries", "Titan Motors"]].map((name) => (
-                <div key={name} className="flex-shrink-0 w-40 h-20 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity">
-                  <span className="text-headline-lg font-headline-lg font-black text-on-surface-variant/80 tracking-tight">{name}</span>
+                <div key={name} className="flex-shrink-0 w-32 h-12 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity">
+                  <span className="text-label-lg font-label-lg font-bold text-on-surface-variant/80 tracking-tight truncate px-2">{name}</span>
                 </div>
               ))}
             </div>
