@@ -65,9 +65,10 @@ function formatSalary(job) {
 async function loadData(searchParams) {
   try {
     const db = await getDb();
-    const [countries, categories, jobsRaw] = await Promise.all([
+    const [countries, categories, industries, jobsRaw] = await Promise.all([
       db.collection("countries").find({}).sort({ name: 1 }).toArray(),
       db.collection("categories").find({}).sort({ name: 1 }).toArray(),
+      db.collection("industries").find({}).sort({ name: 1 }).toArray(),
       db.collection("jobs").find({ status: "Active" }).sort({ postedAt: -1 }).toArray(),
     ]);
 
@@ -119,6 +120,7 @@ async function loadData(searchParams) {
     return {
       countries,
       categories,
+      industries,
       jobs,
       cityCounts: cityCounts.slice(0, 40),
       categoryCounts: categoryCounts.slice(0, 20),
@@ -131,6 +133,7 @@ async function loadData(searchParams) {
     return {
       countries: [],
       categories: [],
+      industries: [],
       jobs: [],
       cityCounts: [],
       categoryCounts: [],
@@ -143,7 +146,7 @@ async function loadData(searchParams) {
 
 export default async function Home({ searchParams }) {
   const sp = await searchParams;
-  const { countries, categories, jobs, cityCounts, categoryCounts, countryCounts, totalActive, filtered } = await loadData(sp);
+  const { countries, categories, industries, jobs, cityCounts, categoryCounts, countryCounts, totalActive, filtered } = await loadData(sp);
   let orgName = "HR System";
   try {
     orgName = await getOrgName();
@@ -302,16 +305,16 @@ export default async function Home({ searchParams }) {
                 </div>
               </div>
 
-              {/* Categories */}
+              {/* Industries */}
               <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md">
                 <h3 className="font-title-md text-title-md text-on-surface mb-4 flex justify-between items-center">
-                  By Categories
-                  <span className="material-symbols-outlined text-outline">category</span>
+                  By Industries
+                  <span className="material-symbols-outlined text-outline">business</span>
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {categoryCounts.slice(0, 8).map((cat) => (
-                    <Link key={cat.name} className="px-4 py-2 rounded-full border border-outline-variant hover:border-secondary hover:text-secondary cursor-pointer transition-colors bg-white" href={`/jobs?q=${encodeURIComponent(cat.name)}`}>
-                      {cat.name}
+                  {industries.slice(0, 8).map((ind) => (
+                    <Link key={ind.name} className="px-4 py-2 rounded-full border border-outline-variant hover:border-secondary hover:text-secondary cursor-pointer transition-colors bg-white" href={`/jobs?q=${encodeURIComponent(ind.name)}`}>
+                      {ind.name}
                     </Link>
                   ))}
                 </div>

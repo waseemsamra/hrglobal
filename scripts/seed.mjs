@@ -514,6 +514,99 @@ async function run() {
   }
   console.log(`Seeded ${industries.length} industries (${industriesUpserted} newly created).`);
 
+  // Seed posting freshness options
+  const postingFreshnessCol = db.collection("postingFreshness");
+  const postingFreshness = [
+    { name: "0-3 days", description: "Very fresh postings." },
+    { name: "3-7 days", description: "Recent postings." },
+    { name: "7-14 days", description: "Less than 2 weeks old." },
+    { name: "14-30 days", description: "Within the last month." },
+  ];
+  let postingFreshnessUpserted = 0;
+  for (const item of postingFreshness) {
+    const existing = await postingFreshnessCol.findOne({ name: item.name });
+    if (existing) continue;
+    await postingFreshnessCol.insertOne({ ...item, createdAt: new Date(), updatedAt: new Date() });
+    postingFreshnessUpserted += 1;
+  }
+  console.log(`Seeded ${postingFreshness.length} posting freshness options (${postingFreshnessUpserted} newly created).`);
+
+  // Seed experience levels
+  const experienceCol = db.collection("experience");
+  const experienceLevels = [
+    { name: "Entry Level", description: "0-2 years experience." },
+    { name: "Mid Level", description: "2-5 years experience." },
+    { name: "Senior Level", description: "5-10 years experience." },
+    { name: "Expert", description: "10+ years experience." },
+  ];
+  let experienceUpserted = 0;
+  for (const item of experienceLevels) {
+    const existing = await experienceCol.findOne({ name: item.name });
+    if (existing) continue;
+    await experienceCol.insertOne({ ...item, createdAt: new Date(), updatedAt: new Date() });
+    experienceUpserted += 1;
+  }
+  console.log(`Seeded ${experienceLevels.length} experience levels (${experienceUpserted} newly created).`);
+
+  // Seed gender options
+  const genderCol = db.collection("gender");
+  const genders = [
+    { name: "Male", description: "" },
+    { name: "Female", description: "" },
+    { name: "Other", description: "" },
+  ];
+  let genderUpserted = 0;
+  for (const item of genders) {
+    const existing = await genderCol.findOne({ name: item.name });
+    if (existing) continue;
+    await genderCol.insertOne({ ...item, createdAt: new Date(), updatedAt: new Date() });
+    genderUpserted += 1;
+  }
+  console.log(`Seeded ${genders.length} gender options (${genderUpserted} newly created).`);
+
+  // Seed monthly salary ranges
+  const monthlySalaryCol = db.collection("monthlySalary");
+  const monthlySalaries = [
+    { name: "Less than 1000", description: "" },
+    { name: "1000-3000", description: "" },
+    { name: "3000-5000", description: "" },
+    { name: "5000-10000", description: "" },
+    { name: "10000+", description: "" },
+  ];
+  let monthlySalaryUpserted = 0;
+  for (const item of monthlySalaries) {
+    const existing = await monthlySalaryCol.findOne({ name: item.name });
+    if (existing) continue;
+    await monthlySalaryCol.insertOne({ ...item, createdAt: new Date(), updatedAt: new Date() });
+    monthlySalaryUpserted += 1;
+  }
+  console.log(`Seeded ${monthlySalaries.length} monthly salary ranges (${monthlySalaryUpserted} newly created).`);
+
+  // Seed nationalities
+  const nationalityCol = db.collection("nationality");
+  const nationalities = [
+    { name: "UAE", description: "United Arab Emirates" },
+    { name: "Saudi Arabia", description: "" },
+    { name: "Qatar", description: "" },
+    { name: "Kuwait", description: "" },
+    { name: "Bahrain", description: "" },
+    { name: "Oman", description: "" },
+    { name: "Egypt", description: "" },
+    { name: "India", description: "" },
+    { name: "Pakistan", description: "" },
+    { name: "Philippines", description: "" },
+    { name: "UK", description: "United Kingdom" },
+    { name: "USA", description: "United States of America" },
+  ];
+  let nationalityUpserted = 0;
+  for (const item of nationalities) {
+    const existing = await nationalityCol.findOne({ name: item.name });
+    if (existing) continue;
+    await nationalityCol.insertOne({ ...item, createdAt: new Date(), updatedAt: new Date() });
+    nationalityUpserted += 1;
+  }
+  console.log(`Seeded ${nationalities.length} nationalities (${nationalityUpserted} newly created).`);
+
   // Seed job roles with counts (idempotent by name)
   const rolesCol = db.collection("roles");
   const roles = [

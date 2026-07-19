@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import LocationsManager from "./LocationsManager";
 import CategoriesManager from "./CategoriesManager";
 import IndustriesManager from "./IndustriesManager";
+import GenericSettingsManager from "./GenericSettingsManager";
 import RolesManager from "./RolesManager";
 
 const TABS = [
@@ -12,6 +13,12 @@ const TABS = [
   { id: "locations", icon: "public", label: "Locations" },
   { id: "categories", icon: "category", label: "Categories" },
   { id: "industries", icon: "business", label: "Industries" },
+  { id: "postingFreshness", icon: "schedule", label: "Posting Freshness" },
+  { id: "experience", icon: "work_history", label: "Experience" },
+  { id: "gender", icon: "people", label: "Gender" },
+  { id: "monthlySalary", icon: "payments", label: "Monthly Salary" },
+  { id: "nationality", icon: "flag", label: "Nationality" },
+  { id: "employers", icon: "apartment", label: "Employers" },
   { id: "roles", icon: "badge", label: "Roles" },
   { id: "notifications", icon: "notifications_active", label: "Notifications" },
   { id: "security", icon: "shield", label: "Security" },
@@ -239,6 +246,48 @@ export default function SettingsPanel() {
 
           {/* Industries */}
           {activeTab === "industries" && <IndustriesManager />}
+
+          {/* Posting Freshness */}
+          {activeTab === "postingFreshness" && (
+            <GenericSettingsManager title="Posting Freshness" apiPath="/api/settings/posting-freshness" placeholder="e.g. 0-3 days" />
+          )}
+
+          {/* Experience */}
+          {activeTab === "experience" && (
+            <GenericSettingsManager title="Experience" apiPath="/api/settings/experience" placeholder="e.g. Entry Level" />
+          )}
+
+          {/* Gender */}
+          {activeTab === "gender" && (
+            <GenericSettingsManager title="Gender" apiPath="/api/settings/gender" placeholder="e.g. Male" />
+          )}
+
+          {/* Monthly Salary */}
+          {activeTab === "monthlySalary" && (
+            <GenericSettingsManager title="Monthly Salary" apiPath="/api/settings/monthly-salary" placeholder="e.g. 3000-5000" />
+          )}
+
+          {/* Nationality */}
+          {activeTab === "nationality" && (
+            <GenericSettingsManager title="Nationality" apiPath="/api/settings/nationality" placeholder="e.g. UAE" />
+          )}
+
+          {/* Employers */}
+          {activeTab === "employers" && (
+            <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-lg">
+              <h3 className="text-title-md font-title-md mb-stack-md">Employers</h3>
+              <p className="text-body-sm text-on-surface-variant mb-stack-md">
+                Manage employers and their job posts from the dedicated Employers page.
+              </p>
+              <a
+                href="/admin/employers"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-opacity"
+              >
+                <span className="material-symbols-outlined text-[18px]">apartment</span>
+                Go to Employers
+              </a>
+            </div>
+          )}
 
           {/* Roles */}
           {activeTab === "roles" && <RolesManager />}
