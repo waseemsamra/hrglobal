@@ -335,7 +335,7 @@ export default async function Home({ searchParams }) {
 
         {/* 1-Column List for Featured Jobs */}
         <section className="bg-surface-container-low py-stack-lg border-b border-outline-variant">
-          <div className="max-w-[1000px] mx-auto px-container-padding-desktop">
+          <div className="max-w-[1440px] mx-auto px-container-padding-desktop">
             <div className="flex justify-between items-end mb-stack-lg">
               <div>
                 <h2 className="font-headline-lg text-headline-lg text-on-surface">Featured Jobs</h2>
