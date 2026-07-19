@@ -471,6 +471,49 @@ async function run() {
   }
   console.log(`Seeded ${categories.length} categories (${categoriesUpserted} newly created).`);
 
+  // Seed industries (idempotent by name)
+  const industriesCol = db.collection("industries");
+  const industries = [
+    { name: "IT", description: "Information technology and software services." },
+    { name: "Hospitality", description: "Hotels, restaurants, and tourism." },
+    { name: "Banking and Finance", description: "Banking, insurance, and financial services." },
+    { name: "Consulting", description: "Management and professional consulting." },
+    { name: "Construction", description: "Building, infrastructure, and real estate development." },
+    { name: "Recruitment", description: "Staffing, headhunting, and HR services." },
+    { name: "Education", description: "Schools, universities, and training." },
+    { name: "IT Hardware", description: "Hardware manufacturing and electronics." },
+    { name: "E-commerce", description: "Online retail and digital commerce." },
+    { name: "Medical", description: "Healthcare and medical services." },
+    { name: "Consumer Durables", description: "Appliances, furniture, and consumer goods." },
+    { name: "Oil and Gas", description: "Energy, petroleum, and petrochemicals." },
+    { name: "Accounting", description: "Audit, tax, and accounting services." },
+    { name: "Engineering", description: "Engineering and technical services." },
+    { name: "FMCG", description: "Fast-moving consumer goods." },
+    { name: "Real Estate", description: "Property sales, leasing, and management." },
+    { name: "Telecom", description: "Telecommunications and networking." },
+    { name: "Advertising", description: "Marketing, media, and advertising." },
+    { name: "Automobile", description: "Automotive manufacturing and sales." },
+    { name: "Logistics", description: "Transport, warehousing, and supply chain." },
+    { name: "Power Generation", description: "Electricity generation and utilities." },
+    { name: "NGO", description: "Non-governmental and nonprofit organizations." },
+    { name: "Retail", description: "Retail trade and store operations." },
+    { name: "Pharmaceutical", description: "Pharma manufacturing and research." },
+    { name: "Steel Fabrication", description: "Metal works and steel manufacturing." },
+  ];
+  let industriesUpserted = 0;
+  for (const ind of industries) {
+    const existing = await industriesCol.findOne({ name: ind.name });
+    if (existing) continue;
+    await industriesCol.insertOne({
+      name: ind.name,
+      description: ind.description,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    industriesUpserted += 1;
+  }
+  console.log(`Seeded ${industries.length} industries (${industriesUpserted} newly created).`);
+
   // Seed job roles with counts (idempotent by name)
   const rolesCol = db.collection("roles");
   const roles = [

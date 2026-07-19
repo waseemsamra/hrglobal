@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import LocationsManager from "./LocationsManager";
 import CategoriesManager from "./CategoriesManager";
+import IndustriesManager from "./IndustriesManager";
 import RolesManager from "./RolesManager";
 
 const TABS = [
@@ -10,6 +11,7 @@ const TABS = [
   { id: "organization", icon: "corporate_fare", label: "Organization" },
   { id: "locations", icon: "public", label: "Locations" },
   { id: "categories", icon: "category", label: "Categories" },
+  { id: "industries", icon: "business", label: "Industries" },
   { id: "roles", icon: "badge", label: "Roles" },
   { id: "notifications", icon: "notifications_active", label: "Notifications" },
   { id: "security", icon: "shield", label: "Security" },
@@ -234,6 +236,9 @@ export default function SettingsPanel() {
 
           {/* Categories */}
           {activeTab === "categories" && <CategoriesManager />}
+
+          {/* Industries */}
+          {activeTab === "industries" && <IndustriesManager />}
 
           {/* Roles */}
           {activeTab === "roles" && <RolesManager />}
