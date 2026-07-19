@@ -3,15 +3,6 @@ import { Suspense } from "react";
 import HeroSearch from "@/components/HeroSearch";
 import { getDb } from "@/lib/mongodb";
 import { getOrgName } from "@/lib/settings";
-import EmiratesLogo from "@/images/emirates.svg";
-import AWRostamaniLogo from "@/images/aw-rostamani.svg";
-import EnbdLogo from "@/images/enbd.svg";
-import AlFuttaimLogo from "@/images/al-futtaim.svg";
-import TalabatLogo from "@/images/talabat.svg";
-import NeomLogo from "@/images/neom.svg";
-import EmaarLogo from "@/images/emaar.svg";
-import FabLogo from "@/images/fab.svg";
-import NoonLogo from "@/images/noon.svg";
 
 export async function generateMetadata() {
   try {
@@ -50,15 +41,15 @@ const CATEGORY_ICONS = {
 const BADGE_LABELS = ["Verified", "Hot Job", "New", "Urgent"];
 
 const LOGOS = [
-  { name: "Emirates", src: EmiratesLogo },
-  { name: "AW Rostamani", src: AWRostamaniLogo },
-  { name: "ENBD", src: EnbdLogo },
-  { name: "Al-Futtaim", src: AlFuttaimLogo },
-  { name: "Talabat", src: TalabatLogo },
-  { name: "Neom", src: NeomLogo },
-  { name: "Emaar", src: EmaarLogo },
-  { name: "FAB", src: FabLogo },
-  { name: "Noon", src: NoonLogo },
+  { name: "Emirates", src: "/images/emirates.svg" },
+  { name: "AW Rostamani", src: "/images/aw-rostamani.svg" },
+  { name: "ENBD", src: "/images/enbd.svg" },
+  { name: "Al-Futtaim", src: "/images/al-futtaim.svg" },
+  { name: "Talabat", src: "/images/talabat.svg" },
+  { name: "Neom", src: "/images/neom.svg" },
+  { name: "Emaar", src: "/images/emaar.svg" },
+  { name: "FAB", src: "/images/fab.svg" },
+  { name: "Noon", src: "/images/noon.svg" },
 ];
 
 function formatSalary(job) {
