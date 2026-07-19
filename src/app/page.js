@@ -302,16 +302,16 @@ export default async function Home({ searchParams }) {
                 </div>
               </div>
 
-              {/* City Pills */}
+              {/* Categories */}
               <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md">
                 <h3 className="font-title-md text-title-md text-on-surface mb-4 flex justify-between items-center">
-                  By City
-                  <span className="material-symbols-outlined text-outline">location_city</span>
+                  By Categories
+                  <span className="material-symbols-outlined text-outline">category</span>
                 </h3>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                  {cityCounts.slice(0, 8).map((item) => (
-                    <Link key={item.city} className="py-2 px-4 rounded border border-outline-variant hover:bg-secondary hover:text-white transition-all text-on-surface font-semibold text-center" href={`/jobs?country=${encodeURIComponent(item.country)}`}>
-                      {item.city}
+                <div className="flex flex-wrap gap-2">
+                  {categoryCounts.slice(0, 8).map((cat) => (
+                    <Link key={cat.name} className="px-4 py-2 rounded-full border border-outline-variant hover:border-secondary hover:text-secondary cursor-pointer transition-colors bg-white" href={`/jobs?q=${encodeURIComponent(cat.name)}`}>
+                      {cat.name}
                     </Link>
                   ))}
                 </div>
