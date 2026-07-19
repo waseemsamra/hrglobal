@@ -1,5 +1,5 @@
 /**
- * Seed script for the HR System candidates collection.
+ * Seed script for the CareerHub candidates collection.
  * Usage: node scripts/seed.mjs
  */
 import { MongoClient, ObjectId } from "mongodb";

@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "HR System — Empower Careers. Sync Your World.",
+  title: "CareerHub — Empower Careers. Sync Your World.",
   description:
     "Unified HR management designed for the modern era. From local payroll compliance to international talent mobility, manage your entire workforce on a single, secure infrastructure.",
 };

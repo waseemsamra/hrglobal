@@ -192,7 +192,7 @@ export default function Home() {
             <div className="col-span-1 md:col-span-1 space-y-6">
               <span className="text-title-md font-title-md font-black text-white flex items-center gap-2">
                 <span className="material-symbols-outlined text-secondary">corporate_fare</span>
-                HR System
+                CareerHub
               </span>
               <p className="text-body-sm text-on-tertiary-container">
                 The modern operating system for global workforce management. Built for reliability,

@@ -6,7 +6,7 @@ import { getDb } from "@/lib/mongodb";
 import { getCurrentAdmin } from "@/lib/admin";
 
 export const metadata = {
-  title: "Candidate Dashboard | HR System",
+  title: "Candidate Dashboard | CareerHub",
 };
 
 export const dynamic = "force-dynamic";

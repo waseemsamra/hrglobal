@@ -4,7 +4,7 @@ import { getCurrentAdmin } from "@/lib/admin";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Employer Management | HR System",
+  title: "Employer Management | CareerHub",
 };
 
 export const dynamic = "force-dynamic";

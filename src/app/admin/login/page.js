@@ -3,7 +3,7 @@ import AdminLoginForm from "@/components/AdminLoginForm";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Admin Portal Login | HR System",
+  title: "Admin Portal Login | CareerHub",
 };
 
 export default function AdminLoginPage() {

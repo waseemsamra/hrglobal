@@ -14,7 +14,7 @@ export async function generateMetadata() {
     };
   } catch {
     return {
-      title: "HR System | Find Your Dream Job Globally",
+      title: "CareerHub | Find Your Dream Job Globally",
       description:
         "Search thousands of active job postings in the world's leading cities. Browse by country, city, and industry.",
     };
@@ -147,11 +147,11 @@ async function loadData(searchParams) {
 export default async function Home({ searchParams }) {
   const sp = await searchParams;
   const { countries, categories, industries, jobs, cityCounts, categoryCounts, countryCounts, totalActive, filtered } = await loadData(sp);
-  let orgName = "HR System";
+  let orgName = "CareerHub";
   try {
     orgName = await getOrgName();
   } catch {
-    orgName = "HR System";
+    orgName = "CareerHub";
   }
 
   const featured = jobs.slice(0, 4);

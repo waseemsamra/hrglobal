@@ -20,7 +20,7 @@ export default function Header() {
       <div className="flex items-center gap-gutter">
         <span className="text-headline-sm font-headline-sm font-bold text-on-surface flex items-center gap-2">
           <span className="material-symbols-outlined text-secondary">corporate_fare</span>
-          HR System
+          CareerHub
         </span>
         <nav className="hidden md:flex gap-6">
           <a

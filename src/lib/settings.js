@@ -8,7 +8,7 @@ export const DEFAULT_SETTINGS = {
     bio: "HR Director specialized in international talent acquisition and regional compliance strategies.",
   },
   organization: {
-    name: "GlobalRecruit",
+    name: "CareerHub",
     hqLocation: "New York, NY",
     brandColor: "#0058BE",
   },

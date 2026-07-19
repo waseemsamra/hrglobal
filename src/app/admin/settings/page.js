@@ -2,7 +2,7 @@ import AdminShell from "@/components/AdminShell";
 import SettingsPanel from "@/components/SettingsPanel";
 
 export const metadata = {
-  title: "Settings | HR System",
+  title: "Settings | CareerHub",
 };
 
 export default function SettingsPage() {
