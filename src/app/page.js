@@ -288,12 +288,12 @@ export default async function Home({ searchParams }) {
               </div>
             </div>
 
-            {/* Row 2: Industries & Cities (Two Columns) */}
+            {/* Row 2: Jobs & Categories (Two Columns) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Industry List */}
+              {/* Jobs List */}
               <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md">
                 <h3 className="font-title-md text-title-md text-on-surface mb-4 flex justify-between items-center">
-                  By Industry
+                  By Job
                   <span className="material-symbols-outlined text-outline">apartment</span>
                 </h3>
                 <div className="flex flex-wrap gap-2">
