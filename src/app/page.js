@@ -274,7 +274,7 @@ export default async function Home({ searchParams }) {
             <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-title-md text-title-md text-on-surface">Browse by Country</h3>
-                <Link className="text-secondary font-semibold flex items-center gap-1 hover:underline" href="#">
+                <Link className="text-secondary font-semibold flex items-center gap-1 hover:underline" href="/jobs">
                   View all countries <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </Link>
               </div>
@@ -410,15 +410,15 @@ export default async function Home({ searchParams }) {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <p className="font-label-md text-on-surface uppercase mb-2">Platform</p>
-              <a className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="#">Privacy Policy</a>
-              <a className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="#">Terms of Service</a>
-              <a className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="#">Cookie Policy</a>
+              <Link className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="/jobs">Privacy Policy</Link>
+              <Link className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="/jobs">Terms of Service</Link>
+              <Link className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="/jobs">Cookie Policy</Link>
             </div>
             <div className="space-y-2">
               <p className="font-label-md text-on-surface uppercase mb-2">Solutions</p>
-              <Link className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="/admin">Recruitment Solutions</Link>
-              <a className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="#">Mobile App</a>
-              <a className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="#">Contact Support</a>
+              <Link className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="/jobs">Recruitment Solutions</Link>
+              <Link className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="/jobs">Mobile App</Link>
+              <Link className="block text-on-surface-variant text-body-sm hover:text-secondary hover:underline transition-all" href="/jobs">Contact Support</Link>
             </div>
           </div>
           <div className="bg-white p-stack-md rounded-xl border border-outline-variant h-fit">
