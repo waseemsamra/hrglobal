@@ -79,6 +79,7 @@ async function loadData(searchParams) {
     const cityCounts = [];
     for (const c of countries) {
       for (const city of c.cities || []) {
+        if (typeof city !== "string") continue;
         const count = jobsRaw.filter((j) =>
           (j.location || "").toLowerCase().includes(city.toLowerCase())
         ).length;
