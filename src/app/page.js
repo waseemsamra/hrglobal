@@ -324,8 +324,8 @@ export default async function Home({ searchParams }) {
         <section className="w-full bg-surface border-y border-outline-variant py-6 overflow-hidden">
           <div className="relative">
             <div className="logo-carousel-track">
-              {[...LOGOS, ...LOGOS].map((logo) => (
-                <div key={logo.name} className="flex-shrink-0 w-32 h-12 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity">
+              {[...LOGOS, ...LOGOS].map((logo, idx) => (
+                <div key={`${logo.name}-${idx}`} className="flex-shrink-0 w-32 h-12 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity">
                   <img src={logo.src} alt={logo.name} className="h-10 w-auto max-w-full" />
                 </div>
               ))}
