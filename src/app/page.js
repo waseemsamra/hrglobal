@@ -3,6 +3,15 @@ import { Suspense } from "react";
 import HeroSearch from "@/components/HeroSearch";
 import { getDb } from "@/lib/mongodb";
 import { getOrgName } from "@/lib/settings";
+import EmiratesLogo from "@/images/emirates.svg";
+import AWRostamaniLogo from "@/images/aw-rostamani.svg";
+import EnbdLogo from "@/images/enbd.svg";
+import AlFuttaimLogo from "@/images/al-futtaim.svg";
+import TalabatLogo from "@/images/talabat.svg";
+import NeomLogo from "@/images/neom.svg";
+import EmaarLogo from "@/images/emaar.svg";
+import FabLogo from "@/images/fab.svg";
+import NoonLogo from "@/images/noon.svg";
 
 export async function generateMetadata() {
   try {
@@ -39,6 +48,18 @@ const CATEGORY_ICONS = {
 };
 
 const BADGE_LABELS = ["Verified", "Hot Job", "New", "Urgent"];
+
+const LOGOS = [
+  { name: "Emirates", src: EmiratesLogo },
+  { name: "AW Rostamani", src: AWRostamaniLogo },
+  { name: "ENBD", src: EnbdLogo },
+  { name: "Al-Futtaim", src: AlFuttaimLogo },
+  { name: "Talabat", src: TalabatLogo },
+  { name: "Neom", src: NeomLogo },
+  { name: "Emaar", src: EmaarLogo },
+  { name: "FAB", src: FabLogo },
+  { name: "Noon", src: NoonLogo },
+];
 
 function formatSalary(job) {
   if (job.minSalary == null && job.maxSalary == null) return null;
@@ -312,9 +333,9 @@ export default async function Home({ searchParams }) {
         <section className="w-full bg-surface border-y border-outline-variant py-6 overflow-hidden">
           <div className="relative">
             <div className="logo-carousel-track">
-              {[...["Global Engineering Partners", "Sterling Capital", "LifeScience Innovations", "CloudStack Systems", "Apex Logistics", "NexGen Energy", "Horizon Health", "Quantum Finance", "BlueOcean Shipping", "IronBridge Manufacturing", "Pinnacle Aviation", "Atlas Renewable Energy", "Crestline Hotels", "Vortex Cybersecurity", "Meridian Telecom", "Summit Education Group", "Redwood Construction", "Silicon Labs", "Oceanic Fisheries", "Titan Motors"], ...["Global Engineering Partners", "Sterling Capital", "LifeScience Innovations", "CloudStack Systems", "Apex Logistics", "NexGen Energy", "Horizon Health", "Quantum Finance", "BlueOcean Shipping", "IronBridge Manufacturing", "Pinnacle Aviation", "Atlas Renewable Energy", "Crestline Hotels", "Vortex Cybersecurity", "Meridian Telecom", "Summit Education Group", "Redwood Construction", "Silicon Labs", "Oceanic Fisheries", "Titan Motors"]].map((name) => (
-                <div key={name} className="flex-shrink-0 w-32 h-12 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity">
-                  <span className="text-label-lg font-label-lg font-bold text-on-surface-variant/80 tracking-tight truncate px-2">{name}</span>
+              {[...LOGOS, ...LOGOS].map((logo) => (
+                <div key={logo.name} className="flex-shrink-0 w-32 h-12 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity">
+                  <img src={logo.src} alt={logo.name} className="h-10 w-auto max-w-full" />
                 </div>
               ))}
             </div>
