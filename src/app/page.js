@@ -334,7 +334,7 @@ export default async function Home({ searchParams }) {
         </section>
 
         {/* 1-Column List for Featured Jobs */}
-        <section className="bg-surface-container-low py-stack-lg border-y border-outline-variant">
+        <section className="bg-surface-container-low py-stack-lg border-b border-outline-variant">
           <div className="max-w-[1000px] mx-auto px-container-padding-desktop">
             <div className="flex justify-between items-end mb-stack-lg">
               <div>
