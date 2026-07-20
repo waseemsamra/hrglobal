@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 const NAV_ITEMS = [
   { icon: "dashboard", label: "Dashboard", href: "/candidate" },
@@ -13,6 +14,8 @@ const NAV_ITEMS = [
 
 export default function CandidateSideNav({ candidate, open = false, onClose }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [busy, setBusy] = useState(false);
   const isActive = (href) => {
     const active =
       href === "/candidate"
@@ -26,6 +29,17 @@ export default function CandidateSideNav({ candidate, open = false, onClose }) {
     if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   };
+
+  async function logout() {
+    setBusy(true);
+    try {
+      await fetch("/api/candidates/login", { method: "DELETE" });
+      router.push("/");
+      router.refresh();
+    } finally {
+      setBusy(false);
+    }
+  }
 
   return (
     <>
@@ -112,14 +126,14 @@ export default function CandidateSideNav({ candidate, open = false, onClose }) {
           <span className="material-symbols-outlined">help</span>
           <span className="text-body-md font-body-md">Help Center</span>
         </Link>
-        <Link
-          href="/candidate/login"
-          onClick={onClose}
-          className="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-highest rounded-full cursor-pointer"
+        <button
+          onClick={() => { logout(); onClose?.(); }}
+          disabled={busy}
+          className="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-highest rounded-full cursor-pointer w-full text-left"
         >
           <span className="material-symbols-outlined">logout</span>
           <span className="text-body-md font-body-md">Sign Out</span>
-        </Link>
+        </button>
       </div>
     </aside>
     </>

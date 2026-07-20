@@ -11,7 +11,7 @@ export default function EmployerLogoutButton() {
     setBusy(true);
     try {
       await fetch("/api/employers/login", { method: "DELETE" });
-      router.push("/employer/login");
+      router.push("/");
       router.refresh();
     } finally {
       setBusy(false);

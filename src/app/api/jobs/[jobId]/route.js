@@ -24,6 +24,8 @@ const EDITABLE_FIELDS = [
   "skills",
   "perks",
   "description",
+  "keyResponsibilities",
+  "additionalRequirements",
   "remotePolicy",
 ];
 

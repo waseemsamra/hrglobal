@@ -11,7 +11,7 @@ export default function CandidateLogoutButton({ className = "" }) {
     setBusy(true);
     try {
       await fetch("/api/candidates/login", { method: "DELETE" });
-      router.push("/candidate/login");
+      router.push("/");
       router.refresh();
     } finally {
       setBusy(false);

@@ -12,7 +12,7 @@ const PERKS = [
 
 const STEPS = ["Job Details", "Compensation", "Requirements", "Description"];
 
-export default function JobPostForm({ source = "admin", createdBy = null, employerId = null }) {
+export default function JobPostForm({ source = "admin", createdBy = null, employerId = null, employers = [] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editJobId = searchParams.get("jobId");
@@ -29,6 +29,8 @@ export default function JobPostForm({ source = "admin", createdBy = null, employ
     experience: "Junior (1-2 years)",
     education: "No Degree Required",
     description: "",
+    keyResponsibilities: "",
+    additionalRequirements: "",
   });
   const [perks, setPerks] = useState({});
   const [skills, setSkills] = useState(["React.js", "TypeScript", "Tailwind CSS"]);
@@ -36,6 +38,7 @@ export default function JobPostForm({ source = "admin", createdBy = null, employ
   const [status, setStatus] = useState({ type: "idle", message: "" });
   const [loadingJob, setLoadingJob] = useState(editing);
   const [editStatusValue, setEditStatusValue] = useState("Active");
+  const [postedBy, setPostedBy] = useState("admin"); // "admin" | employer id
 
   // Job titles come from the roles defined in Admin > Settings > Roles.
   const [roles, setRoles] = useState([]);
@@ -76,12 +79,15 @@ export default function JobPostForm({ source = "admin", createdBy = null, employ
           experience: j.experience || "Junior (1-2 years)",
           education: j.education || "No Degree Required",
           description: j.description || "",
+          keyResponsibilities: j.keyResponsibilities || "",
+          additionalRequirements: j.additionalRequirements || "",
         });
         setSkills(Array.isArray(j.skills) ? [...new Set(j.skills)] : []);
         setPerks(
           Array.isArray(j.perks) ? Object.fromEntries(j.perks.map((p) => [p, true])) : {}
         );
         setEditStatusValue(j.status || "Active");
+        setPostedBy(j.employerId ? String(j.employerId) : "admin");
         // If the stored title isn't one of the known roles, treat it as custom.
         setRoles((prevRoles) => {
           const known = prevRoles.some((r) => r.name === j.title);
@@ -143,7 +149,12 @@ export default function JobPostForm({ source = "admin", createdBy = null, employ
       skills,
       perks: Object.keys(perks).filter((k) => perks[k]),
       description: form.description,
+      keyResponsibilities: form.keyResponsibilities,
+      additionalRequirements: form.additionalRequirements,
     };
+
+    const postSource = postedBy === "admin" ? "admin" : "employer";
+    const postEmployerId = postedBy === "admin" ? null : postedBy;
 
     try {
       let res;
@@ -159,9 +170,9 @@ export default function JobPostForm({ source = "admin", createdBy = null, employ
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            source, // drives ADM-/EMP- Job ID prefix
+            source: postSource, // drives ADM-/EMP- Job ID prefix
             createdBy,
-            employerId,
+            employerId: postEmployerId,
             applicants: 0,
             ...fields,
           }),
@@ -318,6 +329,31 @@ export default function JobPostForm({ source = "admin", createdBy = null, employ
                       </a>
                       .
                     </p>
+                  )}
+                </div>
+
+                {/* Posted By */}
+                <div>
+                  <label className="block text-label-md font-bold text-on-surface-variant mb-2">Posted By</label>
+                  {source === "employer" ? (
+                    <input
+                      disabled
+                      className="w-full bg-surface-container-low border-outline-variant rounded-lg px-4 py-3 text-body-md text-on-surface-variant"
+                      value={employers.find((e) => e.id === employerId)?.company || employers.find((e) => e.id === employerId)?.name || "Employer"}
+                    />
+                  ) : (
+                    <select
+                      value={postedBy}
+                      onChange={(e) => setPostedBy(e.target.value)}
+                      className="w-full bg-surface-container-low border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent transition-all"
+                    >
+                      <option value="admin">Admin</option>
+                      {employers.map((e) => (
+                        <option key={e.id} value={e.id}>
+                          {e.company || e.name} ({e.email})
+                        </option>
+                      ))}
+                    </select>
                   )}
                 </div>
                 <div>
@@ -546,6 +582,80 @@ export default function JobPostForm({ source = "admin", createdBy = null, employ
                     onChange={(e) => set("description", e.target.value)}
                     className="w-full p-4 min-h-[300px] text-body-md focus:outline-none resize-y border-none focus:ring-0"
                     placeholder="Start typing the roles, responsibilities, and company vision here..."
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* Key Responsibilities */}
+            <section className="bg-surface-container-lowest rounded-xl border border-outline-variant">
+              <div className="p-gutter border-b border-outline-variant bg-surface-container-low flex items-center justify-between">
+                <h3 className="text-title-md font-bold text-on-surface flex items-center gap-2">
+                  <span className="material-symbols-outlined text-secondary">checklist</span>
+                  Key Responsibilities
+                </h3>
+              </div>
+              <div className="p-gutter">
+                <div className="border border-outline-variant rounded-lg overflow-hidden bg-white">
+                  <div className="bg-surface-container-low p-2 border-b border-outline-variant flex flex-wrap gap-1">
+                    {["format_bold", "format_italic", "format_list_bulleted", "format_list_numbered"].map((ic) => (
+                      <button key={ic} className="p-2 hover:bg-surface-container-high rounded transition-colors text-on-surface-variant">
+                        <span className="material-symbols-outlined text-[20px]">{ic}</span>
+                      </button>
+                    ))}
+                    <div className="w-[1px] h-6 bg-outline-variant mx-1 self-center"></div>
+                    <button className="p-2 hover:bg-surface-container-high rounded transition-colors text-on-surface-variant">
+                      <span className="material-symbols-outlined text-[20px]">link</span>
+                    </button>
+                    <button className="p-2 hover:bg-surface-container-high rounded transition-colors text-on-surface-variant">
+                      <span className="material-symbols-outlined text-[20px]">image</span>
+                    </button>
+                    <button className="p-2 hover:bg-surface-container-high rounded transition-colors text-on-surface-variant ml-auto">
+                      <span className="material-symbols-outlined text-[20px]">code</span>
+                    </button>
+                  </div>
+                  <textarea
+                    value={form.keyResponsibilities}
+                    onChange={(e) => set("keyResponsibilities", e.target.value)}
+                    className="w-full p-4 min-h-[200px] text-body-md focus:outline-none resize-y border-none focus:ring-0"
+                    placeholder="List the key responsibilities for this role..."
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* Additional Requirements */}
+            <section className="bg-surface-container-lowest rounded-xl border border-outline-variant">
+              <div className="p-gutter border-b border-outline-variant bg-surface-container-low flex items-center justify-between">
+                <h3 className="text-title-md font-bold text-on-surface flex items-center gap-2">
+                  <span className="material-symbols-outlined text-secondary">checklist</span>
+                  Additional Requirements
+                </h3>
+              </div>
+              <div className="p-gutter">
+                <div className="border border-outline-variant rounded-lg overflow-hidden bg-white">
+                  <div className="bg-surface-container-low p-2 border-b border-outline-variant flex flex-wrap gap-1">
+                    {["format_bold", "format_italic", "format_list_bulleted", "format_list_numbered"].map((ic) => (
+                      <button key={ic} className="p-2 hover:bg-surface-container-high rounded transition-colors text-on-surface-variant">
+                        <span className="material-symbols-outlined text-[20px]">{ic}</span>
+                      </button>
+                    ))}
+                    <div className="w-[1px] h-6 bg-outline-variant mx-1 self-center"></div>
+                    <button className="p-2 hover:bg-surface-container-high rounded transition-colors text-on-surface-variant">
+                      <span className="material-symbols-outlined text-[20px]">link</span>
+                    </button>
+                    <button className="p-2 hover:bg-surface-container-high rounded transition-colors text-on-surface-variant">
+                      <span className="material-symbols-outlined text-[20px]">image</span>
+                    </button>
+                    <button className="p-2 hover:bg-surface-container-high rounded transition-colors text-on-surface-variant ml-auto">
+                      <span className="material-symbols-outlined text-[20px]">code</span>
+                    </button>
+                  </div>
+                  <textarea
+                    value={form.additionalRequirements}
+                    onChange={(e) => set("additionalRequirements", e.target.value)}
+                    className="w-full p-4 min-h-[200px] text-body-md focus:outline-none resize-y border-none focus:ring-0"
+                    placeholder="Add any additional requirements for candidates..."
                   />
                 </div>
               </div>

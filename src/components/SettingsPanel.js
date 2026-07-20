@@ -18,7 +18,6 @@ const TABS = [
   { id: "gender", icon: "people", label: "Gender" },
   { id: "monthlySalary", icon: "payments", label: "Monthly Salary" },
   { id: "nationality", icon: "flag", label: "Nationality" },
-  { id: "employers", icon: "apartment", label: "Employers" },
   { id: "roles", icon: "badge", label: "Roles" },
   { id: "notifications", icon: "notifications_active", label: "Notifications" },
   { id: "security", icon: "shield", label: "Security" },
@@ -270,23 +269,6 @@ export default function SettingsPanel() {
           {/* Nationality */}
           {activeTab === "nationality" && (
             <GenericSettingsManager title="Nationality" apiPath="/api/settings/nationality" placeholder="e.g. UAE" />
-          )}
-
-          {/* Employers */}
-          {activeTab === "employers" && (
-            <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-lg">
-              <h3 className="text-title-md font-title-md mb-stack-md">Employers</h3>
-              <p className="text-body-sm text-on-surface-variant mb-stack-md">
-                Manage employers and their job posts from the dedicated Employers page.
-              </p>
-              <a
-                href="/admin/employers"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-opacity"
-              >
-                <span className="material-symbols-outlined text-[18px]">apartment</span>
-                Go to Employers
-              </a>
-            </div>
           )}
 
           {/* Roles */}

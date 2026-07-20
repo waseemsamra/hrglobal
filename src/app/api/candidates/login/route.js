@@ -44,6 +44,11 @@ export async function POST(request) {
 // DELETE /api/candidates/login -> sign out
 export async function DELETE() {
   const res = NextResponse.json({ success: true });
-  res.cookies.set(CANDIDATE_COOKIE, "", { path: "/", maxAge: 0 });
+  res.cookies.set(CANDIDATE_COOKIE, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
   return res;
 }

@@ -33,7 +33,7 @@ export default function SideNav({ active, open = false, onClose }) {
     try {
       await fetch("/api/admin/login", { method: "DELETE" });
     } finally {
-      router.push("/admin/login");
+      router.push("/");
       router.refresh();
     }
   }

@@ -98,6 +98,8 @@ export async function GET(request) {
       applicants: j.applicants || 0,
       postedAt: j.postedAt,
       status: j.status || "Active",
+      source: j.source || "admin",
+      employerId: j.employerId ? String(j.employerId) : null,
     }));
 
     return NextResponse.json({
@@ -199,6 +201,8 @@ export async function POST(request) {
       skills: Array.isArray(body.skills) ? body.skills : [],
       perks: Array.isArray(body.perks) ? body.perks : [],
       description: body.description || "",
+      keyResponsibilities: body.keyResponsibilities || "",
+      additionalRequirements: body.additionalRequirements || "",
       createdAt: new Date(),
     };
 

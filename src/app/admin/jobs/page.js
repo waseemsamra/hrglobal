@@ -31,6 +31,8 @@ async function getJobs() {
       applicants: j.applicants || 0,
       postedAt: j.postedAt ? j.postedAt.toISOString() : null,
       status: j.status || "Active",
+      source: j.source || "admin",
+      employerId: j.employerId ? String(j.employerId) : null,
     }));
 
     return { jobs, counts: { active, archived, draft } };
@@ -46,9 +48,24 @@ export default async function AdminJobsPage() {
 
   const { jobs, counts } = await getJobs();
 
+  let employerNameMap = {};
+  try {
+    const db = await getDb();
+    const employers = await db.collection("employers").find({}).toArray();
+    employerNameMap = Object.fromEntries(employers.map((e) => [String(e._id), e.company || e.name || "Employer"]));
+  } catch {}
+
+  const jobsWithEmployer = jobs.map((j) => {
+    const empName = j.employerId ? employerNameMap[j.employerId] || null : null;
+    return {
+      ...j,
+      employerName: empName,
+    };
+  });
+
   return (
     <AdminShell active="Job Posts" title="Job Posts">
-      <JobPosts jobs={jobs} counts={counts} />
+      <JobPosts jobs={jobsWithEmployer} counts={counts} />
     </AdminShell>
   );
 }

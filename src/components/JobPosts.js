@@ -74,6 +74,9 @@ function JobCard({ job, listView, onAction, busy }) {
             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-surface-container-high text-secondary uppercase">
               {job.type}
             </span>
+            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 uppercase">
+              {job.source === "employer" ? "Employer" : "Admin"}
+            </span>
           </div>
           <div className="relative" ref={menuRef}>
             <button
@@ -125,9 +128,12 @@ function JobCard({ job, listView, onAction, busy }) {
             {job.title}
           </h3>
           <p className="text-[11px] text-on-surface-variant font-mono mb-1">{job.jobId}</p>
-          <p className="text-body-sm text-on-surface-variant flex items-center gap-1 mb-4">
+          <p className="text-body-sm text-on-surface-variant flex items-center gap-1 mb-1">
             <span className="material-symbols-outlined text-[16px]">apartment</span>{" "}
             {job.department} • {job.location}
+          </p>
+          <p className="text-body-sm text-on-surface-variant mb-4">
+            {job.employerName || "CareerHub"}
           </p>
           <div className="grid grid-cols-2 gap-4 py-4 border-t border-dashed border-outline-variant">
             <div>

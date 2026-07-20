@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import Header from "@/components/Header";
 import HeroSearch from "@/components/HeroSearch";
 import { getDb } from "@/lib/mongodb";
 import { getOrgName } from "@/lib/settings";
@@ -159,62 +160,22 @@ export default async function Home({ searchParams }) {
 
   return (
     <div className="min-h-screen bg-background text-on-background font-body-md">
-      {/* TopNavBar */}
-      <header className="bg-surface border-b border-outline-variant sticky top-0 z-50">
-        <div className="flex justify-between items-center h-16 px-container-padding-desktop max-w-[1440px] mx-auto">
-          <div className="flex items-center gap-8">
-            <span className="font-headline-lg text-headline-lg font-bold text-on-surface">{orgName}</span>
-            <nav className="hidden md:flex gap-6">
-              <Link className="font-title-md text-title-md text-secondary border-b-2 border-secondary pb-1 transition-colors" href="/jobs">
-                Jobs
-              </Link>
-              <Link className="font-title-md text-title-md text-on-surface-variant hover:text-secondary hover:bg-surface-container-low transition-colors px-2 rounded" href="/admin/candidates">
-                Candidates
-              </Link>
-              <Link className="font-title-md text-title-md text-on-surface-variant hover:text-secondary hover:bg-surface-container-low transition-colors px-2 rounded" href="/admin">
-                Employers
-              </Link>
-              <Link className="font-title-md text-title-md text-on-surface-variant hover:text-secondary hover:bg-surface-container-low transition-colors px-2 rounded" href="/">
-                Resources
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex gap-2">
-              <Link
-                href="/candidate/login"
-                className="px-4 py-2 text-on-surface hover:bg-surface-container-low rounded-lg transition-all font-semibold"
-              >
-                Login
-              </Link>
-              <Link
-                href="/employer/login"
-                className="px-4 py-2 bg-primary text-on-primary rounded-lg hover:opacity-80 transition-all font-semibold"
-              >
-                Employer
-              </Link>
-            </div>
-            <div className="flex items-center gap-2 border-l border-outline-variant pl-4">
-              <span className="material-symbols-outlined cursor-pointer hover:bg-surface-container-low p-2 rounded-full">notifications</span>
-              <span className="material-symbols-outlined cursor-pointer hover:bg-surface-container-low p-2 rounded-full">account_circle</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main>
+      <Header />
+      <main className="pt-20">
         {/* Split Screen Hero Section */}
         <section className="relative min-h-[600px] flex flex-col md:flex-row overflow-hidden bg-primary-container">
           {/* Content Side */}
-          <div className="w-full md:w-1/2 flex items-center justify-center p-container-padding-desktop z-10">
-            <div className="max-w-xl">
+          <div className="w-full md:w-1/2 flex items-center justify-end z-10">
+            <div className="px-container-padding-desktop">
+              <div className="max-w-xl">
               <h1 className="font-display-lg text-display-lg text-white mb-stack-md">Find Your Dream Job Globally</h1>
               <p className="font-title-md text-title-md text-white/90 mb-stack-lg">Search over 10,000 active job postings in the world&apos;s leading cities.</p>
               <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20">
-                <div className="flex flex-col gap-4">
+                <form action="/jobs" method="GET" className="flex flex-col gap-4">
                   <div className="relative">
                     <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/60">search</span>
                     <input
+                      name="q"
                       className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent outline-none text-white placeholder:text-white/50"
                       placeholder="Job Title, Profession, Industry..."
                       type="text"
@@ -222,17 +183,17 @@ export default async function Home({ searchParams }) {
                   </div>
                   <div className="relative">
                     <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/60">location_on</span>
-                    <select className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent outline-none appearance-none text-white">
-                      <option className="text-on-surface">All Countries</option>
+                    <select name="country" className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent outline-none appearance-none text-white">
+                      <option className="text-on-surface" value="">All Countries</option>
                       {countries.map((c) => (
-                        <option key={c._id} className="text-on-surface">{c.name}</option>
+                        <option key={c._id} className="text-on-surface" value={c.name}>{c.name}</option>
                       ))}
                     </select>
                   </div>
-                  <button className="bg-secondary text-white w-full py-4 rounded-lg font-bold hover:scale-95 transition-all active:opacity-80">
+                  <button type="submit" className="bg-secondary text-white w-full py-4 rounded-lg font-bold hover:scale-95 transition-all active:opacity-80">
                     Find Jobs
                   </button>
-                </div>
+                </form>
               </div>
               {/* Integrated Stats Counter */}
               <div className="grid grid-cols-4 gap-4 mt-stack-lg border-t border-white/10 pt-stack-md">
@@ -254,6 +215,7 @@ export default async function Home({ searchParams }) {
                 </div>
               </div>
             </div>
+          </div>
           </div>
           {/* Image Side */}
           <div className="hidden md:block w-1/2 relative h-full">

@@ -58,6 +58,7 @@ export default function JobSearch({ candidate = null }) {
   const [wishlist, setWishlist] = useState(new Set());
   const [countries, setCountries] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [employerMap, setEmployerMap] = useState({});
 
   // Load the signed-in candidate's viewed + wishlist state.
   useEffect(() => {
@@ -123,10 +124,16 @@ export default function JobSearch({ candidate = null }) {
     Promise.all([
       fetch("/api/locations").then((r) => r.json()),
       fetch("/api/categories").then((r) => r.json()),
+      fetch("/api/employers").then((r) => r.json()).catch(() => ({ employers: [] })),
     ])
-      .then(([loc, cat]) => {
+      .then(([loc, cat, emp]) => {
         setCountries(loc.countries || []);
         setCategories(cat.categories || []);
+        const map = {};
+        (emp.employers || []).forEach((e) => {
+          map[e.id] = e.company || e.name || "Employer";
+        });
+        setEmployerMap(map);
       })
       .catch((e) => console.error(e));
   }, []);
@@ -458,11 +465,14 @@ export default function JobSearch({ candidate = null }) {
                       >
                         {/* Position */}
                         <td className="px-4 py-3">
-                          <button
-                            type="button"
-                            onClick={() => markViewed(job.id)}
-                            className="flex items-center gap-3 text-left"
-                          >
+                           <button
+                             type="button"
+                             onClick={() => {
+                               markViewed(job.id);
+                               router.push(`/jobs/${job.id}`);
+                             }}
+                             className="flex items-center gap-3 text-left"
+                           >
                             <div
                               className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 border ${
                                 isViewed
@@ -505,7 +515,7 @@ export default function JobSearch({ candidate = null }) {
                         {/* Company */}
                         <td className="px-4 py-3">
                           <span className="font-body-sm text-body-sm text-secondary font-semibold">
-                            {job.department}
+                            {job.source === "employer" ? (employerMap[job.employerId] || "Employer") : "CareerHub"}
                           </span>
                         </td>
                         {/* Viewed */}

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import JobSearch from "@/components/JobSearch";
+import Header from "@/components/Header";
 import { getOrgName } from "@/lib/settings";
-import { getCurrentCandidate } from "@/lib/candidate";
-import CandidateSideNav from "@/components/CandidateSideNav";
-import CandidateTopNav from "@/components/CandidateTopNav";
 
 export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+export const revalidate = 0;
 
 export async function generateMetadata() {
   const org = await getOrgName();
@@ -18,71 +18,15 @@ export async function generateMetadata() {
 
 export default async function JobsPage() {
   const orgName = await getOrgName();
-  const candidate = await getCurrentCandidate();
-
-  // Signed-in candidates stay inside the candidate shell (sidebar + top nav)
-  // so "Job Search" opens in the main area of the dashboard, not the global page.
-  if (candidate) {
-    return (
-      <div className="flex min-h-screen bg-background text-on-surface font-body-md">
-        <CandidateSideNav candidate={candidate} />
-        <main className="flex-1 flex flex-col">
-          <CandidateTopNav active="Job Search" />
-          <Suspense fallback={<div className="p-12 text-center text-on-surface-variant">Loading…</div>}>
-            <JobSearch candidate={candidate} />
-          </Suspense>
-          <footer className="h-20" />
-        </main>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-surface text-on-surface min-h-screen flex flex-col">
-      {/* TopNavBar */}
-      <header className="bg-surface border-b border-outline-variant sticky top-0 z-50">
-        <div className="flex justify-between items-center h-16 px-container-padding-desktop max-w-[1440px] mx-auto">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="font-headline-lg text-headline-lg font-bold text-on-surface">
-              {orgName}
-            </Link>
-            <nav className="hidden md:flex gap-6 items-center">
-              <Link className="text-secondary border-b-2 border-secondary pb-1 font-title-md text-title-md" href="/jobs">
-                Jobs
-              </Link>
-              <Link className="text-on-surface-variant hover:text-secondary font-title-md text-title-md transition-colors" href="/admin/candidates">
-                Candidates
-              </Link>
-              <Link className="text-on-surface-variant hover:text-secondary font-title-md text-title-md transition-colors" href="/admin">
-                Employers
-              </Link>
-              <Link className="text-on-surface-variant hover:text-secondary font-title-md text-title-md transition-colors" href="/">
-                Resources
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 mr-4">
-              <button className="p-2 hover:bg-surface-container-low transition-colors rounded-full">
-                <span className="material-symbols-outlined">notifications</span>
-              </button>
-              <Link href="/admin" className="p-2 hover:bg-surface-container-low transition-colors rounded-full">
-                <span className="material-symbols-outlined">account_circle</span>
-              </Link>
-            </div>
-            <Link href="/register" className="px-4 py-2 border border-outline-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-all">
-              Login
-            </Link>
-            <Link href="/employer/login" className="px-4 py-2 bg-on-surface text-on-primary font-label-md text-label-md rounded-lg hover:opacity-80 transition-all">
-              Employer
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <Suspense fallback={<div className="p-12 text-center text-on-surface-variant">Loading…</div>}>
-        <JobSearch candidate={candidate} />
+      <Header />
+      <main className="pt-20">
+        <Suspense fallback={<div className="p-12 text-center text-on-surface-variant">Loading…</div>}>
+        <JobSearch />
       </Suspense>
+      </main>
 
       {/* Footer */}
       <footer className="bg-surface-container-low border-t border-outline-variant mt-auto">
