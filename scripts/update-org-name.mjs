@@ -1,8 +1,11 @@
 import { MongoClient } from "mongodb";
 
-const uri =
-  process.env.MONGODB_URI ||
-  "mongodb+srv://waseemsamra_db_user:qJYG7TunR4LnKUXi@cluster0.cpv8wig.mongodb.net/hr_system?appName=Cluster0";
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  console.error("MONGODB_URI is not set. Add it to .env.local");
+  process.exit(1);
+}
 
 async function main() {
   const client = new MongoClient(uri);
