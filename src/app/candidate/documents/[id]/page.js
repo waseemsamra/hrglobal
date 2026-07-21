@@ -4,7 +4,7 @@ import { getDb } from "@/lib/mongodb";
 import { getCurrentCandidate } from "@/lib/candidate";
 import CandidateSideNav from "@/components/CandidateSideNav";
 import CandidateTopNav from "@/components/CandidateTopNav";
-import CandidateDocPreviewer from "@/components/CandidateDocPreviewer";
+import DocumentPreviewer from "@/components/DocumentPreviewer";
 
 export const dynamic = "force-dynamic";
 
@@ -93,7 +93,7 @@ export default async function CandidateDocPreviewPage({ params }) {
         </div>
 
         {/* Content Split Layout */}
-        <CandidateDocPreviewer doc={meta} fileUrl={fileUrl} />
+        <DocumentPreviewer doc={meta} fileUrl={fileUrl} />
       </main>
     </div>
   );

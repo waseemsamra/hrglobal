@@ -46,6 +46,7 @@ async function getCandidates(jobId) {
           {},
           {
             projection: {
+              _id: 1,
               candidateId: 1,
               name: 1,
               email: 1,
@@ -73,7 +74,7 @@ async function getCandidates(jobId) {
     }
 
     const candidates = filtered.map((d) => ({
-      candidateId: d.candidateId,
+      candidateId: d.candidateId || d._id?.toString() || "",
       name: d.name,
       email: d.email || "",
       role: d.role || "—",

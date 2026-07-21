@@ -4,6 +4,7 @@ import AdminShell from "@/components/AdminShell";
 import CandidateDashboard from "@/components/CandidateDashboard";
 import { getDb } from "@/lib/mongodb";
 import { getCurrentAdmin } from "@/lib/admin";
+import { ObjectId } from "mongodb";
 
 export const metadata = {
   title: "Candidate Dashboard | CareerHub",
@@ -27,7 +28,15 @@ function formatAppliedDate(date) {
 async function getCandidateById(id) {
   try {
     const db = await getDb();
-    return await db.collection("candidates").findOne({ candidateId: id });
+    const query = { $or: [] };
+    if (ObjectId.isValid(id)) {
+      query.$or.push({ _id: new ObjectId(id) });
+    }
+    if (id && String(id).trim()) {
+      query.$or.push({ candidateId: String(id).trim() });
+    }
+    if (query.$or.length === 0) return null;
+    return await db.collection("candidates").findOne(query);
   } catch (err) {
     console.error("Failed to load candidate:", err);
     return null;

@@ -15,7 +15,6 @@ const NAV_ITEMS = [
       { icon: "post_add", label: "Post Management", href: "/admin/jobs/manage" },
     ],
   },
-  { icon: "description", label: "Documents", href: "/admin/documents" },
   { icon: "apartment", label: "Employers", href: "/admin/employers" },
   { icon: "leaderboard", label: "Analytics", href: "/admin" },
   { icon: "business", label: "Industries", href: "/admin/settings" },
