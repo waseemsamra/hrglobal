@@ -58,13 +58,18 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: "This document is empty and cannot be previewed." }, { status: 422 });
     }
 
-    return new Response(buffer, {
-      headers: {
-        "Content-Type": meta.contentType || "application/octet-stream",
-        "Content-Length": String(buffer.length),
-        "Content-Disposition": `inline; filename="${encodeURIComponent(meta.name)}"`,
-      },
-    });
+    const disposition = searchParams.get("download")
+      ? `attachment; filename="${meta.name.replace(/"/g, "")}"`
+      : `inline; filename="${meta.name.replace(/"/g, "")}"`;
+
+    const headers = {
+      "Content-Type": meta.contentType || "application/octet-stream",
+      "Content-Length": String(buffer.length),
+      "Content-Disposition": disposition,
+      "Cache-Control": "no-store",
+    };
+
+    return new Response(buffer, { headers });
   } catch (err) {
     console.error("Candidate document GET error:", err);
     return NextResponse.json({ error: "Failed to retrieve document." }, { status: 500 });
