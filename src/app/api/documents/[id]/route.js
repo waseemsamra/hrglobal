@@ -12,7 +12,14 @@ export async function GET(request, { params }) {
     }
 
     const db = await getDb();
-    const meta = await db.collection("document_meta").findOne({ _id: new ObjectId(id) });
+    let meta = await db.collection("document_meta").findOne({ _id: new ObjectId(id) });
+    let bucketName = "documents";
+
+    if (!meta) {
+      meta = await db.collection("candidate_doc_meta").findOne({ _id: new ObjectId(id) });
+      bucketName = "candidate_docs";
+    }
+
     if (!meta) {
       return NextResponse.json({ error: "Document not found." }, { status: 404 });
     }
@@ -23,20 +30,19 @@ export async function GET(request, { params }) {
         document: {
           id: meta._id.toString(),
           name: meta.name,
-          candidate: meta.candidate,
-          type: meta.type,
-          status: meta.status,
-          size: meta.size,
-          contentType: meta.contentType,
+          candidate: meta.candidate || meta.candidateId?.toString() || "Unassigned",
+          type: meta.type || meta.category || "Other",
+          status: meta.status || "Pending",
+          size: meta.size || 0,
+          contentType: meta.contentType || "application/octet-stream",
           uploadedAt: meta.uploadedAt,
         },
       });
     }
 
-    const bucket = await getBucket("documents");
+    const bucket = await getBucket(bucketName);
     const downloadStream = bucket.openDownloadStream(meta.fileId);
 
-    // Convert the Node stream into a Web ReadableStream for the Response.
     const webStream = new ReadableStream({
       start(controller) {
         downloadStream.on("data", (chunk) => controller.enqueue(chunk));
@@ -74,17 +80,27 @@ export async function DELETE(request, { params }) {
     }
 
     const db = await getDb();
-    const collection = db.collection("document_meta");
-    const meta = await collection.findOne({ _id: new ObjectId(id) });
+    const adminCollection = db.collection("document_meta");
+    const candidateCollection = db.collection("candidate_doc_meta");
+
+    let meta = await adminCollection.findOne({ _id: new ObjectId(id) });
+    let collection = adminCollection;
+    let bucketName = "documents";
+
+    if (!meta) {
+      meta = await candidateCollection.findOne({ _id: new ObjectId(id) });
+      collection = candidateCollection;
+      bucketName = "candidate_docs";
+    }
+
     if (!meta) {
       return NextResponse.json({ error: "Document not found." }, { status: 404 });
     }
 
-    const bucket = await getBucket("documents");
+    const bucket = await getBucket(bucketName);
     try {
       await bucket.delete(meta.fileId);
     } catch (e) {
-      // File may already be gone; continue removing metadata.
       console.warn("GridFS delete warning:", e?.message);
     }
     await collection.deleteOne({ _id: new ObjectId(id) });

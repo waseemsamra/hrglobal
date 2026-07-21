@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function StarRow({ rating = 0 }) {
   return (
@@ -25,7 +26,28 @@ const DOC_ICONS = {
 };
 
 export default function CandidateDashboard({ candidate }) {
+  const router = useRouter();
   const dropRef = useRef(null);
+  const [documents, setDocuments] = useState([]);
+  const [loadingDocs, setLoadingDocs] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/candidates/documents")
+      .then((r) => (r.ok ? r.json() : { documents: [] }))
+      .then((data) => {
+        if (!cancelled) {
+          setDocuments(data.documents || []);
+          setLoadingDocs(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setLoadingDocs(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -215,50 +237,65 @@ export default function CandidateDashboard({ candidate }) {
         <div className="col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
           <h3 className="text-title-md font-title-md mb-6">Document Vault</h3>
           <div className="space-y-4 mb-8">
-            {(candidate.documents || []).map((doc, idx) => (
-              <div
-                key={idx}
-                className={`flex items-center justify-between p-4 border border-outline-variant rounded-lg transition-colors group ${
-                  doc.verified ? "bg-surface/50" : "hover:border-secondary"
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  <div
-                    className={`w-10 h-10 rounded flex items-center justify-center ${
-                      doc.verified ? "bg-green-500/10 text-green-700" : "bg-secondary/5 text-secondary"
-                    }`}
-                  >
-                    <span
-                      className="material-symbols-outlined"
-                      style={doc.verified ? { fontVariationSettings: "'FILL' 1" } : undefined}
+            {(documents.length > 0 ? documents : (candidate.documents || [])).map((doc, idx) => {
+              const isCandidateDoc = !!doc.id && doc.id.length === 24;
+              return (
+                <div
+                  key={doc.id || idx}
+                  className={`flex items-center justify-between p-4 border border-outline-variant rounded-lg transition-colors group ${
+                    doc.verified || doc.status === "Verified" ? "bg-surface/50" : "hover:border-secondary"
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div
+                      className={`w-10 h-10 rounded flex items-center justify-center ${
+                        doc.verified || doc.status === "Verified" ? "bg-green-500/10 text-green-700" : "bg-secondary/5 text-secondary"
+                      }`}
                     >
-                      {DOC_ICONS[doc.type] || "description"}
-                    </span>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="text-body-sm font-bold text-on-surface">{doc.name}</p>
-                      {doc.verified && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-500/10 text-green-700 font-bold uppercase">
-                          Verified
-                        </span>
-                      )}
+                      <span
+                        className="material-symbols-outlined"
+                        style={doc.verified || doc.status === "Verified" ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                      >
+                        {DOC_ICONS[doc.type] || DOC_ICONS[doc.category] || "description"}
+                      </span>
                     </div>
-                    <p className="text-label-md text-on-tertiary-container">{doc.meta}</p>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-body-sm font-bold text-on-surface">{doc.name}</p>
+                        {(doc.verified || doc.status === "Verified") && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-500/10 text-green-700 font-bold uppercase">
+                            Verified
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-label-md text-on-tertiary-container">
+                        {doc.status === "Pending" ? "Pending verification" : (doc.meta || doc.category || "Document")}
+                      </p>
+                    </div>
                   </div>
+                  {isCandidateDoc && (
+                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => router.push(`/candidate/documents/${doc.id}`)}
+                        title="Preview"
+                        className="p-2 text-on-surface-variant hover:text-secondary"
+                      >
+                        <span className="material-symbols-outlined">visibility</span>
+                      </button>
+                      <a
+                        href={`/api/candidates/documents/${doc.id}`}
+                        download={doc.name}
+                        title="Download"
+                        className="p-2 text-on-surface-variant hover:text-secondary"
+                        onClick={() => router.refresh()}
+                      >
+                        <span className="material-symbols-outlined">download</span>
+                      </a>
+                    </div>
+                  )}
                 </div>
-                {!doc.verified && (
-                  <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button className="p-2 text-on-surface-variant hover:text-secondary">
-                      <span className="material-symbols-outlined">visibility</span>
-                    </button>
-                    <button className="p-2 text-on-surface-variant hover:text-secondary">
-                      <span className="material-symbols-outlined">download</span>
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div

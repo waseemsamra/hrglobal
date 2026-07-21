@@ -20,11 +20,11 @@ function isPdf(contentType = "") {
 function isImage(contentType = "") {
   return contentType.startsWith("image/");
 }
-function isDoc(contentType = "") {
+function isDoc(contentType = "", fileName = "") {
   return (
     contentType === "application/msword" ||
     contentType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-    /\.(doc|docx)$/i.test(contentType)
+    /\.(doc|docx)$/i.test(fileName)
   );
 }
 
@@ -63,7 +63,6 @@ export default function DocumentPreviewer({ doc, fileUrl, onBack }) {
   const renderPreview = () => {
     if (isImage(doc.contentType)) {
       return (
-        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={fileUrl}
           alt={doc.name}
@@ -96,7 +95,7 @@ export default function DocumentPreviewer({ doc, fileUrl, onBack }) {
       );
     }
 
-    if (isDoc(doc.contentType) && !iframeError) {
+    if (isDoc(doc.contentType, doc.name) && !iframeError) {
       return (
         <iframe
           src={getDocPreviewUrl()}
@@ -108,7 +107,6 @@ export default function DocumentPreviewer({ doc, fileUrl, onBack }) {
       );
     }
 
-    // Fallback for unsupported types or iframe errors
     return (
       <div className="bg-white rounded-xl shadow-lg p-12 text-center">
         <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-surface-container-high flex items-center justify-center">
@@ -118,7 +116,7 @@ export default function DocumentPreviewer({ doc, fileUrl, onBack }) {
         </div>
         <p className="font-headline-md text-headline-md text-on-surface mb-2">{doc.name}</p>
         <p className="text-on-surface-variant mb-4">
-          Preview not available for this file type. Use Download to view the file.
+          Preview is not supported for this file type. You can download the file to view it.
         </p>
         <a
           href={fileUrl}

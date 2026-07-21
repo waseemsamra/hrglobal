@@ -15,13 +15,13 @@ function docTypeFromMime(mime = "", name = "") {
 export async function GET() {
   try {
     const db = await getDb();
-    const docs = await db
-      .collection("document_meta")
-      .find({})
-      .sort({ uploadedAt: -1 })
-      .toArray();
 
-    const documents = docs.map((d) => ({
+    const [adminDocs, candidateDocs] = await Promise.all([
+      db.collection("document_meta").find({}).sort({ uploadedAt: -1 }).toArray(),
+      db.collection("candidate_doc_meta").find({}).sort({ uploadedAt: -1 }).toArray(),
+    ]);
+
+    const adminMapped = adminDocs.map((d) => ({
       id: d._id.toString(),
       fileId: d.fileId ? d.fileId.toString() : null,
       name: d.name,
@@ -31,7 +31,27 @@ export async function GET() {
       size: d.size || 0,
       contentType: d.contentType || "application/octet-stream",
       uploadedAt: d.uploadedAt,
+      source: "admin",
     }));
+
+    const candidateMapped = candidateDocs.map((d) => ({
+      id: d._id.toString(),
+      fileId: d.fileId ? d.fileId.toString() : null,
+      name: d.name,
+      candidate: d.candidateId ? `Candidate ${d.candidateId.toString().slice(-6)}` : "Unassigned",
+      type: d.category || "Other",
+      status: d.status || "Pending",
+      size: d.size || 0,
+      contentType: d.contentType || "application/octet-stream",
+      uploadedAt: d.uploadedAt,
+      source: "candidate",
+    }));
+
+    const documents = [...adminMapped, ...candidateMapped].sort((a, b) => {
+      const dateA = new Date(a.uploadedAt || 0).getTime();
+      const dateB = new Date(b.uploadedAt || 0).getTime();
+      return dateB - dateA;
+    });
 
     return NextResponse.json({ documents });
   } catch (err) {
